@@ -1,0 +1,24 @@
+
+        <mat-card class="my-card">
+
+            <div class="contfrm">
+                <div class="frmUserEmp">
+                <form  
+                    [formGroup]="frmBuscaEmp"
+                    class="form-material">
+                    <p>
+                        <mat-form-field>
+                        <mat-placeholder>{{placeholder}}</mat-placeholder>
+                            <input matInput type="text" formControlName="buscar">
+                            <button mat-button matSuffix mat-stroked-button aria-label="search" (click)="busUserEmp()">
+                            <span matSuffix class="material-icons">
+                                search
+                            </span>
+                        </button>
+                        </mat-form-field>
+                    </p>
+                </form> 
+                </div>  
+            </div> 
+
+        </mat-card>

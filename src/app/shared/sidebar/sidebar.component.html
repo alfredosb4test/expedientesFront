@@ -1,0 +1,100 @@
+<!-- <div id="layoutSidenav_nav">
+  <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+    <div class="sb-sidenav-menu">
+      <div class="nav">
+        <div class="sb-sidenav-menu-heading">Interface</div>
+        <span *ngFor="let item of cambioMenu" id="sideMenu">
+          <a class="nav-link collapsed"
+            href="#" data-bs-toggle="collapse"
+            
+            [attr.data-bs-target]="'#' + item.id"
+            aria-expanded="false"
+            aria-controls="collapseLayouts2"
+            >
+
+            <img [src]="item.icono" alt="user"  style="padding-right: 8px;" />{{ item.titulo }}
+            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+          </a>
+          <div class="collapse" [attr.id]="item.id" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav">
+                <a class="nav-link" *ngFor="let subMenu of item.submenu" [routerLink]="subMenu.url">{{ subMenu.titulo }}</a>
+            </nav>
+          </div>
+        </span>
+      </div>
+    </div>
+    <div class="sb-sidenav-footer">
+        <div class="small">Logged in as:</div>
+        Start Bootstrap
+    </div>
+  </nav>
+</div> -->
+
+<div id="layoutSidenav_nav" class="verMenu2">
+  <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+    <div class="row rowMenu">
+      <div id="content" class="col-lg-3 sb-sidenav-menu">
+          <div id="menu">
+              <ul>
+                <span *ngFor="let item of menuItems" id="">
+                  <li class="has-sub" [class.active]="item.active===true">
+                      <!--img *ngIf="item.icono" [src]="item.icono" alt="user"  style="float: left; position: absolute; margin: 6px 0 0 5px; width: 45px;" /-->
+                      <a title="" [routerLink]="item.url" style="position: relative;">
+                        {{ item.titulo }} <i class="fa fa-angle-right" *ngIf="item.items"></i>
+                      </a>                      
+                        <ul *ngIf="item.items" class="has-sub2">
+                            
+                            <li *ngFor="let subM of item.submenu" class="has-sub has-sub2">
+                              <a title="" [routerLink]="subM.url"  class="has-sub2">{{ subM.titulo }} <i class="fa fa-angle-right" *ngIf="subM.items"></i></a>
+                                <ul *ngIf="subM.items" class="has-sub2">
+                                    <li *ngFor="let subsubM of subM.submenu" class="has-sub2">
+                                      <a title="" [routerLink]="subsubM.url"  class="has-sub2">{{ subsubM.titulo }}<i class="fa fa-angle-right" *ngIf="subsubM.items"></i></a>
+                                        <ul *ngIf="subsubM.items" class="has-sub2">
+                                          <li *ngFor="let subsubsubM of subsubM.submenu" class="has-sub2">
+                                            <a title="" [routerLink]="subsubsubM.url"  class="has-sub2">{{ subsubsubM.titulo }}<i class="fa fa-angle-right" *ngIf="subsubsubM.items"></i></a>
+                                          </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                           
+                        </ul>
+                      
+                  </li>
+                </span>
+              </ul>
+          </div>
+      </div>
+      
+    </div>
+  </nav>
+</div>
+     <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- <aside class="left-sidebar" style="background-color: #525354 !important">
+            <div class="scroll-sidebar" style="background-color: #525354;">
+                <nav class="sidebar-nav" style="background-color: #525354;">
+                    <ul id="sidebarnav">
+                        <li *ngFor="let item of cambioMenu" id="sideMenu">
+                            <a class="has-arrow waves-effect waves-dark menuItem"  aria-expanded="false">
+                                <img [src]="item.icono" alt="user"  style="padding-right: 12px;" />
+                                <span class="hide-menu">{{ item.titulo }} </span>
+                            </a>
+
+                            <ul aria-expanded="false" class="collapse">
+                                <li *ngFor="let subMenu of item.submenu">
+                                    <a [routerLink]="subMenu.url"
+                                        routerLinkActive="active"
+                                        [routerLinkActiveOptions]="{exact: true}" >{{ subMenu.titulo }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside> -->
+
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->

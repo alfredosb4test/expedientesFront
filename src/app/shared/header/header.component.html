@@ -1,0 +1,36 @@
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark" id="topbarID"   >
+            <!-- Navbar Brand-->
+            
+            <!-- Sidebar Toggle id=sidebarToggle-->
+            <button class="btn btn-link btn-white btn-sm order-lg-0 me-4 me-lg-0" id="" (click)="menutoogle()" href="#!">
+              <i class="bi bi-list txt-header" style="font-size: 20px; "></i>
+            </button>
+            <img src="assets/images/logo_header.png" alt="homepage" class="light-logo mx-2"  width="40"/> 
+            <span class="txt-header">Senado de la Republica</span> 
+            <!-- Navbar Search-->
+            <app-breadcrumbs class="d-md-inline-block d-none mx-4"></app-breadcrumbs>
+            <form class="d-md-inline-block form-inline mx-auto">
+              
+            </form>
+            
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <img [src]="imgUrl" style=" width: 30px; border-radius: 100px;">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" routerLink="settings">Configuración</a></li>
+                        <li><a class="dropdown-item" routerLink="perfil">Perfil</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item cursor-pointer" (click)="logout()">Salir</a></li>
+                    </ul>
+                </li>
+            </ul>
+          </nav>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->

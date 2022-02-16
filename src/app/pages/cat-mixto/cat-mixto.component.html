@@ -1,0 +1,77 @@
+
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Visible</th> 
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of catMix; let i = index ">
+      <th width="30" scope="row">{{ (i + 1)+((page-1) * pageSize) }}</th>
+      <td (click)="openModal(addCatMixModal, item)">
+        {{ item.nombre }}
+      </td>
+      <td width="50">  
+          <i class="bi bi-eye-fill" 
+             *ngIf="item.visible"
+             style="font-size: 22px; color: rgb(57, 134, 45);"></i>
+        
+ 
+          <i class="bi bi-eye-slash-fill" 
+             *ngIf="!item.visible"
+             style="font-size: 22px; color: rgb(158, 45, 37);"></i>
+      
+      </td> 
+    </tr>
+    </tbody>
+  </table>
+
+<span *ngIf="totalItems" class="d-flex justify-content-between p-2"> 
+    <ngb-pagination [collectionSize]="totalItems"
+                    [(page)]="page" 
+                    [pageSize]="pageSize"
+                    [maxSize]="10" 
+                    [rotate]="true" 
+                    [ellipses]="false" 
+                    [boundaryLinks]="true"
+                    (pageChange)="loadPage($event)">
+    </ngb-pagination>
+
+    <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="loadPage(page)">
+        <option [ngValue]="5">5 items por pagina</option>
+        <option [ngValue]="10">10 items por pagina</option>
+        <option [ngValue]="20">20 items por pagina</option>
+      </select>
+</span>
+
+<ng-template #addCatMixModal let-modal class=" modalTheme">
+  <div class="modal-header">
+    <h5 class="modal-title txtColorTema" id="exampleModalLabel">Nueva Categoria</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="nombre" class="txtColorTema">Nombre:</label>
+        <form   
+            id="frmAddCat"
+            autocomplete="=off"
+            [formGroup]="frmAddCat">
+          <input class="form-check-input" type="hidden" role="switch" id="id_categoria_mixto" formControlName="id_categoria_mixto">
+          <input type="text" class="form-control" id="nombre" formControlName="nombre">
+          <div class="form-check form-switch mt-2">
+              <input class="form-check-input" type="checkbox" role="switch" id="visible" formControlName="visible">
+              <label class="form-check-label" for="visible">Visible</label>
+            </div>
+        </form>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary"  (click)="modal.dismiss()">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="editCat();">Actualizar</button>
+  </div>
+</ng-template>

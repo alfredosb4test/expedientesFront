@@ -1,0 +1,47 @@
+<form class="form w-xl-75 mx-auto"
+      [formGroup]="formFiltros" id="frm_filtros">
+<div class="row" style="position: relative; margin-top: 50px; color: var(--bs-form-control-color);">
+   <div class="col-12 col-md-4">
+       <div class="row w-100 d-flex align-items-center">
+
+         <div class="col-5">
+           <label for="staticEmail" class="d-inline-block mx-2">
+             <i class="fas fa-filter mx-2 d-none d-md-inline-block"></i>
+             Cliente
+           </label>
+         </div>
+         <div class="col-7">
+           <select [compareWith]="compareFiltros" class="form-select" aria-label="cliente" id="cliente" formControlName="listClientes" (change)="selectLista($event);filtraSalas()">
+             <option *ngFor="let elemento of listClientes" 
+                     [ngValue]="elemento" 
+                     > {{ elemento.nombre }} </option>
+           </select>
+         </div>
+     </div>
+   </div>
+   <div class="col-12 col-md-4">
+     <div class="row w-100 d-flex align-items-center">
+       <div class="col-5">
+         <label for="staticEmail" class="d-inline-block mx-2">Región</label>
+       </div>
+       <div class="col-7">
+         <select [compareWith]="compareFiltros" class="form-select" aria-label="cliente" id="region" formControlName="listZona" (change)="selectLista($event);filtraSalas()">
+           <option *ngFor="let elemento of listZona" [ngValue]="elemento"> {{ elemento.nombre }} </option>
+         </select>
+       </div>
+     </div>
+   </div>
+   <div class="col-12 col-md-4">
+     <div class="row w-100 d-flex align-items-center">
+       <div class="col-5">
+         <label for="staticEmail" class="d-inline-block mx-2">Sala</label>
+       </div>
+       <div class="col-7">
+         <select [compareWith]="compareFiltros" class="form-select" aria-label="cliente" id="sala" formControlName="listSalas" (change)="selectLista($event)">
+           <option *ngFor="let elemento of listSalas" [ngValue]="elemento"> {{ elemento.nombre }} </option>
+         </select>
+       </div>
+     </div>
+   </div>
+ </div>
+</form>

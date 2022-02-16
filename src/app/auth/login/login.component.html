@@ -1,0 +1,120 @@
+ 
+<style>
+    BODY{
+      background-color: white;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+        background-color: #e0e0e0 !important;
+        border-color: #6d6d72 !important;
+    }
+    .btn-primary:hover{
+        background-color: #3e3e3f !important;
+        border-color: #6d6d72 !important;
+    }
+    .form-control, .form-check-input {
+        background-color: #e0e0e0 !important;
+        border: 2px solid #eae9f0;
+    }
+    .logCabecera2{
+        position: relative;
+     
+        width: 400px; 
+        margin: 0 auto;
+    }
+    #login{
+      background: #ffffff;
+      left:12px;
+    }
+    .modal-header {
+      padding:9px 15px;
+      border-bottom:1px solid #eee;
+      background-color: #353535;
+      color: #000000;
+
+    }
+    .modal-body, .modal-footer {
+      padding:9px 15px;
+      background-color: #e3e3e3;
+      color: #000;
+    }
+    .bienvenido{
+      color:#000000;
+    }
+  </style>
+    <!-- <div class="logCabecera2">
+        <img src="assets/images/login_zitroLogo.png" style="position: relative; width: 350px; float: left;">
+        <img src="assets/images/login_crmLogo.png" style="position: relative; float: left;">
+    </div> -->
+<div id="login" class="row align-items-center h-50 position-absolute w-100 top-0 animate__delay-.1s ">
+  <div class="position-absolute top-0 left-0 py-4 bienvenido">
+    <img src="assets/images/logo2.png">
+  </div>
+  
+  <div class="d-inline-block">
+ 
+      
+  <div id="contLogin" style="width: 400px; margin: 0 auto;">
+      <div style="top:50px;position:relative;">
+          <div class="logCabecera" style="height: 10px;">            
+              <!-- <img src="assets/login_zitroTop.png" width="400px"> -->
+          </div>
+          <div class="logFrm" style="margin: 0 auto;width: 400px;">            
+              <form (submit)="login()" 
+                      id="formLogin"
+                      autocomplete="=off"
+                      [formGroup]="formLogin">
+                  <input class="form-check-input" type="hidden" role="switch" id="flexSwitchCheckDefault" formControlName="login">
+
+                  <div class="input-group mb-3">
+                      <span class="input-group-text" id="basic-addon1" style="width: 110px;">Usuario</span>
+                      <input type="text" class="form-control txt-negro" formControlName="usuario" placeholder="Username" aria-label="Username" autocomplete="off" aria-describedby="basic-addon1">
+                  </div>
+    
+
+                  <div class="input-group mb-3">
+                      <span class="input-group-text" id="basic-addon1" style="width: 110px;">Contraseña</span>
+                      <input type="password" class="form-control txt-negro" formControlName="pwd" placeholder="Contraseña" aria-label="Contraseña" autocomplete="off" aria-describedby="basic-addon1">
+                  </div>
+  
+                  <br>
+                  <div class="row"> 
+                      <div class="form-check form-switch col-md-6">
+                          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" formControlName="recordar">                    
+                          <label class="form-check-label" for="flexSwitchCheckDefault" style="width: 50%; color: #333333;">Recordar</label>
+                      </div>
+
+                      <div class="text-sm-end  col-md-6" >                        
+ 
+                      </div>
+                  </div>
+                  <br>
+                  
+                  <button class="btn btn-lg btn-primary d-block mx-auto" type="submit" style="width: 150px; margin: 0 auto; color: #000000;">Ingresar</button>
+          
+
+
+                  <div class="row">
+                      <div class="col text-danger">
+                          <p *ngIf="campoNoValido('usuario')">Usuario es obligatorio</p>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col text-danger">
+                          <p *ngIf="campoNoValido('pwd')">Contraseña es obligatorio</p>
+                      </div>
+                  </div>
+                </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+    <br><br>
+    
+ 
