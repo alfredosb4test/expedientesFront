@@ -1,0 +1,44 @@
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Expedientes</th>
+    </tr>
+    </thead>
+    <tbody style="width:100%">
+    <tr *ngFor="let item of catExp; let i = index ">
+      <!-- <th width="30" scope="row">{{ (i + 1)+((page-1) * pageSize) }}</th> -->
+      <td >
+        <table>
+            <tr>
+                <td style="display: revert; width:90px;">
+                    <span style="font-size: 12px;">Exp #<br></span>
+                    <div style="font-weight: bold; text-align: center; width:90px;"><a [routerLink]="['/dashboard/buscarDocs', item.id_exp, item.numero]" >{{ item.numero }}</a></div>
+                </td>
+                <td width="100%">
+                    <span class="float-end">
+                      <button type="button" class="btn btn-danger" (click)="delDocumento( item.id_exp, item.numero )" > <i class="bi bi-trash3-fill"></i></button>
+                    </span>
+                    <div style="margin-top: -5px; color: #0091c9;">{{ item.asunto }}</div>
+                    <div style="color: #185009; font-style: italic;">
+                        {{ item.periodo2 }} {{ item.tipoperiodo2 }} {{ item.annus2 }} {{ item.legislatura2 }}
+                    </div>    
+                    <br>
+                    <span style="font-weight: bold;font-size: 12px;">AUTOR:</span> {{ item.autor }}
+                    <br>
+                    <span style="font-weight: bold;font-size: 12px;">TURNO:</span> {{ item.turno }}
+                    <br>
+                    <span style="font-weight: bold;font-size: 12px;">ENTRADA:</span> {{ item.entradaF }}
+                    <br>
+                    <span *ngIf="item.apruebaF"><span style="font-weight: bold;font-size: 12px;">APROBADO:</span> {{ item.apruebaF }}</span>
+                </td>
+            </tr>
+        </table>
+        
+      </td>
+ 
+    </tr>
+    </tbody>
+</table>
+
+<div class="text-danger text-center" *ngIf="!totalExp" ><h5>Sin resultados para {{ buscar }}.</h5></div>

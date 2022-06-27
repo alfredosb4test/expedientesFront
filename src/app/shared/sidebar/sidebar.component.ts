@@ -29,11 +29,11 @@ export class SidebarComponent implements OnInit {
       titulo: 'Expedientes', 
       items: 1,
       submenu:[
-        { titulo: 'Agregar', url: 'catMixtoFrm' },
-        { titulo: 'Listar', url: 'clientes/reporteEvolucion' },
-        { titulo: 'Buscar Expediente', url: 'clientes/reporteEvolucion' },
-        { titulo: 'Buscar Asunto', url: 'clientes/reporteEvolucion' },
-        { titulo: 'Reporte', url: 'clientes/reporteEvolucion' },
+        { titulo: 'Agregar', url: 'formularioExperiente' },
+        { titulo: 'Listar', url: 'expedientes' },
+        // { titulo: 'Buscar Expediente', url: 'clientes/reporteEvolucion' },
+        // { titulo: 'Buscar Asunto', url: 'clientes/reporteEvolucion' },
+        { titulo: 'Reporte', url: 'reporte' },
       ]
     },
     

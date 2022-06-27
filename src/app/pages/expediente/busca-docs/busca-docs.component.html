@@ -1,0 +1,227 @@
+
+<table class="table table-striped">
+    <thead>
+    <tr height="50">
+        <th scope="col" valign="top" width="200">Documentos</th>
+        <th scope="col" valign="top"> 
+            
+            <span style="margin-top: -8px;" class="hand"
+                 (click)="editarExpeModal( id_expediente, numero )" >
+                <i class="bi bi-pencil-square" style="font-size: 22px; color: rgb(57, 134, 45);"></i> Editar Expediente
+            </span>    
+            /
+            <span style="margin-top: -8px;" class="hand"
+                 (click)="insertarDoc( id_expediente, numero )" >
+                <i class="bi bi-folder-plus" style="font-size: 22px; color: rgb(57, 134, 45);"></i> Nuevo Documento
+            </span>    
+        </th>
+        <th (click)="backClicked()" class="text-end hand" valign="top">Regresar</th>
+    </tr>
+    </thead>
+    <tbody >
+    <tr *ngFor="let item of documentos; let i = index ">
+      <!-- <th width="30" scope="row">{{ (i + 1)+((page-1) * pageSize) }}</th> -->
+      <td colspan="3">
+        <span class="float-end">
+            <button type="button" class="btn btn-primary" (click)="duplicaDocumento( item.id_documento )"><i class="bi bi-files"></i></button>
+            <button type="button" class="btn btn-danger" (click)="delDocumento( item.id_documento )" > <i class="bi bi-trash3-fill"></i></button>
+        </span>
+        <table style="font-size: 12px; ">
+            <tr>
+                <td [width]="80">
+                    <span style="font-weight: bold;">Periodo<br></span> 
+                </td>
+                <td>
+                    <!-- [routerLink]="['/dashboard/editDoc']"
+                    [queryParams] = "item" -->
+                    <div style="text-align: justify;" class="hand"
+                    (click)="editarDoc( item, numero )" >{{ item.np }} {{ item.tp }} {{ item.annusF }} {{ item.legislaturaF }} </div>
+                </td>
+            </tr>
+            <tr *ngIf="item.categoria?.length > 0">
+                <td [width]="80">
+                    <span style="font-weight: bold;">Rango</span>                     
+                </td>
+                <td>
+                    <div>{{ item.categoria }} </div>
+                </td>
+            </tr>
+            <tr *ngIf="item.asunto?.length > 0">
+                <td [width]="80">
+                    <span style="font-weight: bold;">Asunto</span>                     
+                </td>
+                <td>
+                    <div style="font-weight: bold; ">{{ item.asunto }} </div>
+                </td>
+            </tr>
+            <tr *ngIf="item.autor?.length > 0">
+                <td [width]="80">
+                    <span style="font-weight: bold;">Autor</span>                     
+                </td>
+                <td>
+                    <div >{{ item.autor }} </div>
+                </td>
+            </tr>
+            <tr *ngIf="item.entradaF?.length > 0">
+                <td [width]="80">
+                    <span style="font-weight: bold;">Entrada</span>                     
+                </td>
+                <td>
+                    <div>{{ item.entradaF }} </div>
+                </td>
+            </tr>
+            <tr *ngIf="item.refe?.length > 0">
+                <td [width]="80">
+                    <span style="font-weight: bold;">Referencia</span>                     
+                </td>
+                <td>
+                    <div>{{ item.refe }} </div>
+                </td>
+            </tr>
+            <tr *ngIf="item.turno?.length > 0">
+                <td [width]="80">
+                    <span style="font-weight: bold;">Turno</span>                     
+                </td>
+                <td>
+                    <div>{{ item.turno }} </div>
+                </td>
+            </tr>
+            <tr *ngIf="item.fechadeseF?.length > 0">
+                <td [width]="80">
+                    <span style="font-weight: bold;">Fecha Desechado</span>                     
+                </td>
+                <td>
+                    <div>{{ item.fechadeseF }} </div>
+                </td>
+            </tr>
+            <tr *ngIf="item.apruebaF?.length > 0">
+                <td [width]="80">
+                    <span style="font-weight: bold;">Fecha de Aprobación</span>                     
+                </td>
+                <td>
+                    <div>{{ item.apruebaF }} </div>
+                </td>
+            </tr>
+            <tr *ngIf="item.fecha_concluidoF?.length > 0">
+                <td [width]="80">
+                    <span style="font-weight: bold;">Fecha de Conclusión</span>                     
+                </td>
+                <td>
+                    <div>{{ item.fecha_concluidoF }} </div>
+                </td>
+            </tr>
+ 
+        </table>
+        
+
+ 
+        <div *ngIf="item.procesos?.length > 0">
+
+            <table class="table table-striped" style="border: 1px solid;">
+                <thead>
+                <tr>
+                <th scope="col" style="background-color: gray;">PROCESO LEGISLATIVO</th>
+            
+                </tr>
+                </thead>
+                <tbody >
+                <tr *ngFor="let proceso of item.procesos; let i = index ">
+                    <td >
+                        <table style="font-size: 12px; ">
+                        <tr>
+                            <td [width]="150">
+                                <span style="font-weight: bold;">{{ proceso['tramiteF'] }} </span>                     
+                            </td>
+                            <td>
+                                <div><p align='justify' >{{ proceso['texto'] }}</p></div>
+                                <span style="font-weight: bold; color: #ad9a17;">{{ proceso['fechaF'] }}</span>      
+                            </td>
+                            
+                        </tr>
+                        </table>
+        
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <div *ngIf="item.DOF?.length > 0">
+                    <button type="button" (click)="openModal(DOFModal, item.DOF)" class="btn btn-outline-primary">Texto del Diario Oficial</button>
+                </div>
+            </div>
+            <div class="col">
+                <a *ngIf="item.id_gaceta?.length > 0" href='http://www.senado.gob.mx/index.php?ver=sp&mn=2&sm=2&id={{item.id_gaceta}}' target='_blank'
+                    onClick="window.open(this.href, this.target, 'width=1000,height=700,scrollbars=yes');"> 
+                    <button type="button" class="btn btn-outline-primary" >Enlace a la Gaceta del Senado</button>
+                </a>
+            </div>
+            <div class="col">
+                <a *ngIf="item.d_debates?.length > 0" href='{{item.d_debates}}' target='_blank'
+                    onClick="window.open(this.href, this.target, 'width=1000,height=700,scrollbars=yes');"> 
+                    <button type="button" class="btn btn-outline-primary" >Enlace al Diario de los Debates</button>
+                </a>
+ 
+            </div>
+            <div *ngIf="item.files?.length > 0">
+ 
+                <ngb-accordion #acc="ngbAccordion" >
+                    <ngb-panel title="Archivos">
+                      <ng-template ngbPanelContent>
+                        <div class="accordion-body" *ngFor="let file of item.files; let i = index ">
+                            <span style="font-weight: bold;">
+                                <a href="assets/ftp/{{ file['archivo'] }}" target='popup'>
+                                    {{ file['archivo'] }} 
+                                </a></span>         
+                        </div>
+                      </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+
+        </div>
+
+
+
+ 
+      </td>
+    </tr>
+    </tbody>
+</table>
+<div [hidden]="!loadExp" >
+    <div class="alert alert-danger" role="alert" *ngIf="!documentos.length">
+        Sin Documentos.
+      </div>
+</div>
+
+<ng-template #DOFModal let-modal class=" modalTheme">
+    <div class="modal-header">
+      <h5 class="modal-title txtColorTema" id="exampleModalLabel">Texto del Diario Oficial</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3 txtDOF">
+          
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary"  (click)="modal.dismiss()">Cerrar</button> 
+    </div>
+  </ng-template>
+
+  <ng-template #editExpModal let-modal class=" modalTheme">
+    <div class="modal-header">
+      <h5 class="modal-title txtColorTema" id="exampleModalLabel">Editar Expediente</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+        <app-frm-expediente [tipoForm]="'editar'" [datos]="datosEdit" (statusForm)="statusFrmExpediente( $event )"></app-frm-expediente>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary"  (click)="modal.dismiss()">Cerrar</button>
+    </div>
+
+  </ng-template>

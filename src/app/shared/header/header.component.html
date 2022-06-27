@@ -12,9 +12,21 @@
             <span class="txt-header">Senado de la Republica</span> 
             <!-- Navbar Search-->
             <app-breadcrumbs class="d-md-inline-block d-none mx-4"></app-breadcrumbs>
-            <form class="d-md-inline-block form-inline mx-auto">
-              
-            </form>
+            
+            <div class="d-md-inline-block form-inline mx-auto">
+              <div class="input-group  p-2" style="width: 400px;">
+     
+                <input type="search"
+                    #txtBuscar
+                    (keyup.enter)="buscarExpediente(txtBuscar.value)"
+                    class="form-control" 
+                    style="width: 100px;"
+                    aria-describedby="helpId" placeholder="Buscar Expediente">
+                <button type="button" class="btn btn-outline-primary"
+                        (click)="buscarExpediente(txtBuscar.value)" >Buscar</button>
+                
+              </div>
+            </div>
             
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">

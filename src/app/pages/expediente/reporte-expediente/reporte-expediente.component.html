@@ -1,0 +1,289 @@
+<form [formGroup]="busquedaForm" (ngSubmit)="onSubmit()" [hidden]="ocultaBuscador">
+    <div class="row g-2 mb-3">
+        <div class="col-6">
+            <div class="form-floating">
+                <select class="form-select"
+                        formControlName="id_categoria" id="ctrl" aria-label="Floating label select example">
+                        <option value="{{ item.id_cl }}" *ngFor="let item of lstLegislativo">{{ item.categoria }}</option> 
+                </select>
+                <label for="ctrl">Rango</label>
+            </div>
+        </div>
+    </div>
+    <div class="row g-2 mb-3">
+        <div class="col-6">
+            <div class="form-floating">
+            <select formControlName="id_categoria"
+                    name='legislatura' id="ctr2" class='form-select' >
+                <option value='57'  >LVII</option>
+                <option value='58'  >LVIII</option>
+                <option value='59'  >LIX</option>
+                <option value='60'  >LX</option>
+                <option value='61'  >LXI</option>
+                <option value='62'  >LXII</option>
+            </select>
+            <label for="ctr2">Legislatura</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-2 mb-3">
+        <div class="col-6">
+            <div class="form-floating">
+                <select formControlName="annus"
+                        name='annus' id="ctr3" class='form-select' > 
+                <option value='1' >1</option>
+                <option value='2' >2</option>
+                <option value='3' >3</option>
+                </select>
+                <label for="ctr3">Año</label>
+            </div>
+        </div>
+    </div>    
+
+    <div class="row g-2 mb-3">
+        <div class="col-6">
+            <div class="form-floating">
+                <select formControlName="periodo" name='periodo' id="ctr4" class='form-select'>
+                    <option value='1'>Primer Periodo</option>
+                    <option value='2'>Segundo Periodo</option>
+                </select>
+                <label for="ctr4">Perido</label>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-floating">
+                <select formControlName="tipoperiodo" name='tipoperiodo' id="ctr5" class='form-select'> 
+                    <option value='1'>Ordinario</option>
+                    <option value='2'>Receso</option>
+                    <option value='3'>Extraordinario</option>
+                </select>
+                <label for="ctr5">Tipo Perido</label>
+            </div>
+        </div>
+    </div> 
+
+
+    <div class="row g-2 mb-3">
+        <div class="col-6">
+            <div class="form-floating">
+                <select formControlName="desp_desch" name='desp_desch' id="ctr6" class='form-select'> 
+                    <option value='1'>SI</option>
+                    <option value='2'>NO</option>
+                </select>
+                <label for="ctr6">Aprobado</label>
+            </div>
+        </div>
+    </div>  
+
+    <div class="row g-2 mb-3">
+        <div class="col-6">
+            <div class="form-floating">
+                <select formControlName="desch" name='desch' id="ctr7" class='form-select'> 
+                    <option value='1'>SI</option>
+                    <option value='2'>NO</option>
+                </select>
+                <label for="ctr7">Desechado</label>
+            </div>
+        </div>
+    </div>  
+
+    <div class="row g-2 mb-3">
+        <div class="col-6">
+            <div class="form-floating">
+                <select formControlName="desa" name='desa' id="ctr7" class='form-select'> 
+                    <option value='1'>SI</option>
+                    <option value='2'>NO</option>
+                </select>
+                <label for="ctr7">Concluido</label>
+            </div>
+        </div>
+    </div>  
+
+    <div class="row g-2 mb-3">
+        <div class="col-6">
+            <div class="form-floating">
+                <select formControlName="fraccion" name='fraccion' id="ctr8" class='form-select'> 
+                    <option value='MORENA'  >MORENA</option>
+                    <option value='PAN'     >PAN</option>
+                    <option value='PRI'     >PRI</option>
+                    <option value='PRD'     >PRD</option>
+                    <option value='PT'      >PT</option>
+                    <option value='MC'      >MC</option>
+                    <option value='PVEM'    >PVEM</option>      
+                    <option value='PES'     >PES</option>
+                    <option value='SG'      >SG</option>      
+                    <option value='C'       >CONJUNTAS</option>
+                    <option value='CONG'    >CONGRESOS</option>
+                    <option value='EJFED'   >EJECUTIVO FEDERAL</option>
+                    <option value='CD'      >CÁMARA DE DIPUTADOS</option>
+                    <option value='CL'      >CONGRESOS LOCALES</option>
+                </select> 
+                <label for="ctr8">Fracción</label>
+            </div>
+        </div>
+    </div> 
+    <div class="row"> 
+        <div class="col align-self-end">
+            <button type="submit" class="btn btn-outline-primary float-end" aria-controls="collapseExample">
+                Buscar <i class="bi bi-search"></i>
+            </button>
+    
+        </div>
+    </div>
+</form>
+
+
+
+<div class="row" [hidden]="!ocultaBuscador">
+    <div class="col-3">
+        <div class="input-group mb-3 p-2">
+            <div>
+                Total
+                <span class="badge bg-primary">
+                    {{totalItems}} 
+                </span> 
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        <button type="button" class="btn btn-link float-end" (click)="regresar()">Regresar</button>
+        <span *ngIf="totalItems" class="d-flex justify-content-end p-2"> 
+          <ngb-pagination [collectionSize]="totalItems"
+                          [(page)]="page" 
+                          [pageSize]="pageSize"
+                          [maxSize]="17" 
+                          [rotate]="true" 
+                          [ellipses]="false" 
+                          [boundaryLinks]="true"
+                          (pageChange)="loadPage($event)">
+          </ngb-pagination>
+        
+          <select class="custom-select hide" style="width: auto; display: none;" [(ngModel)]="pageSize" (ngModelChange)="loadData(page)">
+              <option [ngValue]="10">10 items por pagina</option>
+              <option [ngValue]="50">50 items por pagina</option>
+              <option [ngValue]="150">150 items por pagina</option>
+            </select>
+        </span>
+    </div>
+</div>
+<div [hidden]="!ocultaBuscador">
+    <table class="table table-striped" width="100%" >
+        <thead>
+        <tr>
+        <th scope="col">Expedientes</th>
+        </tr>
+        </thead>
+        <tbody style=" overflow: auto;height: 650px;">
+        <tr *ngFor="let item of catExp; let i = index " width="100%">
+        <!-- <th width="30" scope="row">{{ (i + 1)+((page-1) * pageSize) }}</th> -->
+        <td width="100%">
+            <table width="100%">
+                <tr>
+                    <td style="display: revert; width:90px;">
+                        <span style="font-size: 12px;">Exp #<br></span>
+                        <div style="font-weight: bold; text-align: center; width:90px;"><a [routerLink]="['/dashboard/buscarDocs', item.id_expediente, item.numero]" >{{ item.numero }}</a></div>
+                    </td>
+                    <td>   
+                        <div style="margin-top: -5px; color: #0091c9;"></div>
+                    
+                    </td>
+                    <td width="100%">                      
+                        <table>
+                            <tr>
+                                <td style="font-weight: bold;font-size: 12px;" width="100" class="text-end">Periodo:</td>
+                                <td >
+                                    <div style="text-align: justify;padding-left: 9px;" class="hand">{{ item.periodo2 }} {{ item.tipoperiodo2 }} {{ item.annus2 }} {{ item.legislatura2 }}</div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="item.asunto">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Asunto:</td>
+                                <td style="font-weight: bold;font-size: 12px;padding-left: 9px;">{{ item.asunto }}</td>
+                            </tr>                        
+                            <tr>
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Reforma Const.:</td>
+                                <td style="font-size: 12px;padding-left: 9px;" >
+                                    <div *ngIf="item.reforma; else reformaNo">Si</div> 
+                                    <ng-template #reformaNo>No</ng-template>
+                                </td>
+                            </tr>
+                            <tr *ngIf="item.refe">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Referencia:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.refe }}</td>
+                            </tr>
+                            <tr *ngIf="item.fechadeseF">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Fecha Desechado:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.fechadeseF }}</td>
+                            </tr>
+                            <tr *ngIf="item.apruebaF">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Referencia:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.apruebaF }}</td>
+                            </tr>
+                            <tr *ngIf="item.fecha_concluidoF">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Fecha de Concluisi&oacute;n:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.fecha_concluidoF }}</td>
+                            </tr>
+                            <tr *ngIf="item.enterado">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Enterado:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.enterado }}</td>
+                            </tr>
+                            <tr *ngIf="item.entradaF">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Entrada:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.entradaF }}</td>
+                            </tr>
+                            <tr *ngIf="item.autor">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Autor:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.autor }}</td>
+                            </tr>
+                            <tr *ngIf="item.turno">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Turno:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.turno }}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Ejecutivo:</td>
+                                <td style="font-size: 12px;padding-left: 9px;" >
+                                    <div *ngIf="item.ejecutivo==2">No</div>  
+                                    <div *ngIf="item.ejecutivo==1">Si</div>  
+                                    <div *ngIf="item.ejecutivo != 2 && item.ejecutivo != 1">Sin Selecci&oacute;n</div>  
+                                </td>
+                            </tr>
+                            <tr *ngIf="item.observaciones">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Observaciones:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.observaciones }}</td>
+                            </tr>
+                            <tr *ngIf="item.observaprueba">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Observaci&oacute;n de Aprobaci&oacute;n:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.observaprueba }}</td>
+                            </tr>
+                            <tr *ngIf="item.TA">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Texto Aprobado:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.TA }}</td>
+                            </tr>
+                            <tr *ngIf="item.EA">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Expedientes Acumulados:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.EA }}</td>
+                            </tr>
+                            <tr *ngIf="item.sinopsis">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Sinopsis:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.sinopsis }}</td>
+                            </tr>
+                            <tr *ngIf="item.fecha_DOFF">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Fecha de Aprobaci&oacute;n en el<br />Diario Oficial de la<br />Federaci&oacute;n:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.fecha_DOFF }}</td>
+                            </tr>
+                            <tr *ngIf="item.DOF">
+                                <td style="font-weight: bold;font-size: 12px;" class="text-end">Texto del Diario Oficial:</td>
+                                <td style="font-size: 12px;padding-left: 9px;">{{ item.DOF }}</td>
+                            </tr>                  
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            
+        </td>
+    
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- {{ item.periodo2 }} {{ item.tp }} {{ item.annusF }} {{ item.legislaturaF }} -->

@@ -1,0 +1,552 @@
+<div class="row">
+	<div class="col">
+		<h4 *ngIf="editar">{{numero}}</h4>
+	</div>
+	<div class="col">
+		<div class="float-end hand" [routerLink]="['/dashboard/buscarDocs', id_expediente, numero]">Regresar</div> 
+	</div>
+</div>
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+	<input type="hidden" class="form-control" formControlName="id_expediente" >
+	<input type="hidden" class="form-control" formControlName="id_documento" >
+	<input type="hidden" class="form-control" formControlName="tipoFrm" >
+<div class="row g-2 mb-3">
+	<div class="col-8">
+		<div class="form-floating">
+			<input type="text" class="form-control" formControlName="refe" id="ctrl1" placeholder="Referencia">
+			<label for="ctrl1">Referencia</label>
+		</div>
+	</div>
+	<div class="col-4">
+		<div class="form-floating">
+			<select class="form-select"
+					  formControlName="id_categoria" id="ctrl2" aria-label="Floating label select example">
+					  <option value="{{ item.id_cl }}" *ngFor="let item of lstLegislativo">{{ item.categoria }}</option> 
+			</select>
+			<label for="ctrl2">Rango</label>
+		</div>
+	</div>
+</div>
+
+<div class="row g-2 mb-3">
+	<div class="col-md">
+		<div class="form-floating">
+			<textarea class="form-control" formControlName="asunto" id="ctrl3" placeholder="Asunto" style="height: 100px"></textarea>
+			<label for="ctrl3">Asunto</label>
+		</div>
+	</div>
+	<div class="col-md">
+		<div class="form-floating">
+			<textarea class="form-control" formControlName="autor" id="ctrl4" placeholder="Autor" style="height: 100px"></textarea>
+			<label for="ctrl3">Autor</label>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-3">
+		<div class="form-floating">
+			<select class="form-select" formControlName="legislatura" id="ctrl5" aria-label="Floating label select example">
+				<option value='65'>LXV</option>
+				<option value='64'>LXIV</option>
+				<option value='63'>LXIII</option>
+				<option value='62'>LXII</option>
+				<option value='61'>LXI</option>
+				<option value='60'>LX</option>
+				<option value='59'>LIX</option>
+				<option value='58'>LVIII</option>
+				<option value='57'>LVII</option>
+				<option value='56'>LVI</option>
+				<option value='55'>LV</option>
+				<option value='54'>LIV</option>
+				<option value='53'>LIII</option>
+			</select>
+			<label for="ctrl5">Legislatura</label>
+		</div>
+	</div>
+	<div class="col-3 mb-3">
+				<div class="form-floating">
+			<select class="form-select" formControlName="annus" id="ctrl6" aria-label="Floating label select example">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select>
+			<label for="ctrl6">Año</label>
+		</div>
+	</div>
+	<div class="col-3">
+				<div class="form-floating">
+			<select class="form-select" formControlName="periodo" id="ctrl7" aria-label="Floating label select example">
+				<option value='1'>Primer Periodo</option>
+				<option value='2'>Segundo Periodo</option>
+			</select>
+			<label for="ctrl7">Periodo</label>
+		</div>
+	</div>
+	<div class="col-3">
+				<div class="form-floating">
+			<select class="form-select" formControlName="tipoperiodo" id="ctrl8" aria-label="Floating label select example">
+				<option value='1'>Ordinario</option>
+              <option value='2'  >Receso</option>
+              <option value='3'  >Extraordinario</option>
+			</select>
+			<label for="ctrl8">Tipo Periodo</label>
+		</div>
+	</div>
+</div>
+
+<div class="row  mb-3">
+	<div class="col-md">
+		<div class="form-check form-switch">
+			<input class="form-check-input" formControlName="reforma" type="checkbox" role="switch" id="ctrl9" style="width: 40px;height: 18px;">
+			<label class="form-check-label ps-2" for="ctrl9">Reforma Constitucional</label>
+		</div>
+ 	</div>
+	 <div class="col-md">
+		<div class="form-check form-switch">
+			<input class="form-check-input" formControlName="desa" type="checkbox" role="switch" id="ctrl10" style="width: 40px;height: 18px;">
+			<label class="form-check-label ps-2" for="ctrl10">Concluido</label>
+		</div>
+ 	</div>
+</div>
+
+ <div class="row  mb-3">
+	<div class="col-md">
+		<div class="form-floating">
+			<textarea class="form-control" formControlName="turno" placeholder="Leave a comment here" id="ctrl11" style="height: 100px"></textarea>
+			<label for="ctrl11">Turno</label>
+		</div>
+	</div>
+
+</div>
+
+<div class="row  mb-3">
+	<div class="col-3">
+		<div class="input-group">
+			<input class="form-control" placeholder="Fecha de Aprobación" formControlName="aprueba"
+					[(ngModel)]="aprueba" ngbDatepicker #d1="ngbDatepicker">
+			<button class="ngbButton calendar" (click)="d1.toggle()" type="button"></button>
+		</div>
+	</div>
+	<div class="col-3">
+		<div class="input-group">
+			<input class="form-control" placeholder="Fecha de Conclusión" formControlName="fecha_concluido"
+					[(ngModel)]="fecha_concluido" ngbDatepicker #d2="ngbDatepicker">
+			<button class="ngbButton calendar" (click)="d2.toggle()" type="button"></button>
+		</div>
+	</div>
+	<div class="col-3">
+		<div class="input-group">
+			<input class="form-control" placeholder="Fecha Desechado" formControlName="fechadese"
+					[(ngModel)]="fechadese" ngbDatepicker #d3="ngbDatepicker">
+			<button class="ngbButton calendar" (click)="d3.toggle()" type="button"></button>
+		</div>
+	</div>
+	<div class="col-3">
+		<div class="input-group">
+			<input class="form-control" placeholder="Entrada" formControlName="entrada"
+					[(ngModel)]="entrada" ngbDatepicker #d4="ngbDatepicker">
+			<button class="ngbButton calendar" (click)="d4.toggle()" type="button"></button>
+		</div>
+	</div>
+</div>
+
+<div class="row g-2 mb-3">
+	<div class="col-md">
+		<div class="form-floating">
+			<textarea class="form-control" formControlName="observaciones" placeholder="Leave a comment here" id="ctrl13" style="height: 100px"></textarea>
+			<label for="ctrl13">Observaciones</label>
+		</div>
+	</div>
+	<div class="col-md">
+		<div class="form-floating">
+			<textarea class="form-control" formControlName="observaprueba" placeholder="Leave a comment here" id="ctrl14" style="height: 100px"></textarea>
+			<label for="ctrl14">Observaciones de Aprobación</label>
+		</div>
+	</div>
+</div>
+																			<!-- NUEVO PROCESO LEGISLATIVO -->
+<div class="row g-2 mb-3">
+	<p>
+		<button type="button" class="btn btn-outline-primary" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
+		  aria-controls="collapseExample" *ngIf="editar">
+		  Proceso Legislativo
+		</button>
+	 </p>
+	 <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+		<div class="card">
+		  <div class="card-body" style="border: 1px solid;">
+				<form [formGroup]="procesoForm" (ngSubmit)="addProceso()"> 
+					<input type="hidden" class="form-control" formControlName="id_expediente" >
+					<input type="hidden" class="form-control" formControlName="id_documento" >
+					<div class="row g-2 mb-3">
+							<div class="form-floating">
+								<select class="form-select"
+								formControlName="proTramite" id="proTramite" aria-label="Floating label select example">
+									<option value="1" >RECTIFICACI&Oacute;N DE TURNO</option>
+									<option value="2" >TR&Aacute;MITE INICIAL</option>
+									<option value="3" >PRIMERA LECTURA</option>
+									<option value="4" >SEGUNDA LECTURA</option> 
+									<option value="5" >DICTAMINACI&Oacute;N CONJUNTA</option> 
+									<option value="6" >MOCI&Oacute;N SUSPENSIVA</option> 
+									<option value="7" >FUNDAMENTACI&Oacute;N DEL DICTAMEN</option> 
+									<option value="8" >POSICIONAMIENTO DE LOS GRUPOS PARLAMENTARIOS</option> 
+									<option value="9" >DISCUSI&Oacute;N GENERAL</option>
+									<option value="10">DISCUSI&Oacute;N PARTICULAR</option> 
+									<option value="11">EFECTOS DE LA DISCUSI&Oacute;N</option> 
+									<option value="12">SITUACI&Oacute;N EN C&Aacute;MARA DE DIPUTADOS</option>    
+									<option value="13">PODER EJECUTIVO FEDERAL</option>    
+									<option value="14">LEGISLATURAS ESTATALES</option>    
+									<option value="15">COMISIONES</option>    
+									<option value="16">P&Uacute;BLICADO EN EL DIARIO OFICIAL</option>
+									<option value="17">DISCUSI&Oacute;N</option>
+									<option value="18">SEGUIMIENTO</option> 
+									<option value="19">URGENTE RESOLUCI&Oacute;N</option>
+									<option value="20">AMPLIACI&Oacute;N DE PLAZO</option>
+									<option value="21">EXCITATIVA</option>
+									<option value="22">TEXTO APROBADO</option>
+									<option value="23">ACUERDO DE LA JUNTA DE COORDINACI&Oacute;N POL&Iacute;TICA</option>
+									<option value="24">ACUERDO DE LA MESA DIRECTIVA</option>
+									<option value="25">COMUNICACI&Oacute;N</option>
+									<option value="26">PROYECTO DE DECLARATORIA</option>
+									<option value="27">ESCRUTINIO</option>
+									<option value="28">DECLARATORIA DE APROBACI&Oacute;N</option>
+									<option value="29">EFECTOS DE LA DECLARATORIA</option>
+									<option value="30">ART&Iacute;CULO 219 DEL REGLAMENTO DEL SENADO</option>
+									<option value="31">CONCLUIDO</option>
+									<option value="32">RETIRADO</option>
+									<option value="33">RESPUESTA</option>
+
+								</select>
+								<label for="proTramite">Tramite</label>
+							</div>
+					</div>
+					<div class="row g-2 mb-3">
+						<div class="form-floating">
+							<textarea class="form-control" formControlName="proTexto" placeholder="Texto" id="ctrl13" style="height: 100px"></textarea>
+							<label for="ctrl13">Texto </label>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<div class="input-group">
+							<input class="form-control" placeholder="fecha" formControlName="profFecha"
+									[(ngModel)]="profFecha" ngbDatepicker #d5="ngbDatepicker">
+							<button class="ngbButton calendar" (click)="d5.toggle()" type="button"></button>
+						</div>
+					</div>
+					<div class="container">
+						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+							<!-- data-bs-toggle="modal"  data-bs-target="#procesosModal"  -->
+							<button type="button" 
+									(click)="verProcesos()"
+									class="btn btn-outline-primary" aria-controls="collapseExample">
+								Ver Procesos
+							</button>
+							<button type="submit"  class="btn btn-outline-primary" aria-controls="collapseExample">
+								Guardar Proceso
+							</button>
+						</div>
+					</div>
+				</form>
+		  </div>
+		</div>
+	 </div>
+
+</div>
+<div class="row g-2 mb-3 mt-5">
+	<div cdkDropListGroup>
+		<div class="col-6 example-container">
+			<div class="tituloList">
+				<h3>Autores</h3>
+			</div> 
+				<div
+					cdkDropList
+					[cdkDropListData]="lstTodo"
+					class="example-list lst1"
+					(cdkDropListDropped)="drop($event)" > 
+						<div *ngFor="let item of lstTodo" class="example-box" [ngStyle]="{'background-color': item.color}" cdkDrag>
+								{{item.nombre}}
+						</div> 
+				</div>
+		</div>
+		
+		<div class="col-6 example-container">
+			<div class="tituloList">
+				<h3>Seleccionados ({{autores}})</h3>
+			</div>
+			<div
+				cdkDropList
+				[cdkDropListData]="done"
+				class="example-list lst2"
+				(cdkDropListDropped)="drop($event)">
+				<div class="example-box" *ngFor="let item of done" [ngStyle]="{'background-color': item.color}" cdkDrag>{{item.apellidos}} {{item.nombre}}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row g-2 mb-3">
+	<div class="col-4">
+		<h3>Primera Comisi&oacute;n</h3>
+
+		<select class="form-select mb-3" aria-label=" example" formControlName="primera">
+			<option value="-1" selected="selected">-- Selecciones una opcion --</option>
+			<option value="{{ item.id }}" *ngFor="let item of lstPriSegComi">{{ item.nombre }}</option>
+		</select> 
+	</div>
+	<div class="col-8">
+		<h3>Segunda Comisi&oacute;n</h3>
+		<select class="form-select" multiple aria-label="multiple select example" style="height: 250px;" formControlName="segunda"> 
+			<option value="-1" selected="selected">-- Eliminar seleccion --</option>
+			<option value="{{ item.id }}" *ngFor="let item of lstPriSegComi">{{ item.nombre }}</option>
+		</select>
+	</div>
+</div>
+
+<div class="row g-2 mb-3">
+	<div class="col-md">
+		<div class="form-floating">
+			<textarea class="form-control" formControlName="TA" id="ctrl3" placeholder="Texto Aprobado" style="height: 100px"></textarea>
+			<label for="ctrl3">Texto Aprobado</label>
+		</div>
+	</div>
+	<div class="col-md">
+		<div class="form-floating">
+			<textarea class="form-control" formControlName="EA" id="ctrl4" placeholder="Expedientes" style="height: 100px"></textarea>
+			<label for="ctrl3">Expedientes Acumulados</label>
+		</div>
+	</div>
+</div>
+
+<div class="row g-2 mb-3">
+	<div class="col-md">
+		<div class="form-floating">
+			<textarea class="form-control" formControlName="sinopsis" id="ctrl3" placeholder="sinopsis" style="height: 100px"></textarea>
+			<label for="ctrl3">Sinopsis</label>
+		</div>
+	</div>
+	<div class="col-md">
+		<div class="form-floating">
+			<textarea class="form-control" formControlName="suscritos" id="ctrl4" placeholder="suscritos" style="height: 100px"></textarea>
+			<label for="ctrl3">Suscritos</label>
+		</div>
+	</div>
+</div>
+
+<div class="row g-2 mb-3">
+	<div class="col-md">
+		<div class="form-floating">
+			<textarea class="form-control" formControlName="DOF" id="ctrl3" placeholder="DOF" style="height: 100px"></textarea>
+			<label for="ctrl3">Texto del Diario Oficial</label>
+		</div>
+	</div>
+	<div class="col-md">
+		<div class="form-floating">
+			<textarea class="form-control" formControlName="notas" id="ctrl4" placeholder="notas" style="height: 100px"></textarea>
+			<label for="ctrl3">Notas Internas</label>
+		</div>
+	</div>
+</div>
+
+<div class="row  mb-3">
+	<div class="col-4">
+		<div class="input-group">
+			<input class="form-control" placeholder="Fecha de publicación en Diario Oficial de la Federación" formControlName="fecha_DOF"
+					[(ngModel)]="fecha_DOF" ngbDatepicker #d6="ngbDatepicker">
+			<button class="ngbButton calendar" (click)="d6.toggle()" type="button"></button>
+		</div>
+	</div>
+	<div class="col-4">
+		<div class="form-floating">
+			<input type="text" class="form-control" formControlName="id_gaceta"  placeholder="Id Gaceta">
+			<label for="ctrl1">Id Gaceta</label>
+		</div>
+	</div>
+	<div class="col-4">
+		<div class="form-floating">
+			<input type="text" class="form-control" formControlName="d_debates"  placeholder="Diario de los Debates">
+			<label for="ctrl1">Diario de los Debates</label>
+		</div>
+	</div>
+
+</div>
+	<div class="row"> 
+		<div class="col align-self-end">
+			<button type="submit" class="btn btn-outline-primary float-end" aria-controls="collapseExample">
+				{{ btn_txt }}
+			</button>
+			<button type="button" (click)="verArchivos()" class="btn btn-outline-primary float-end" aria-controls="collapseExample" *ngIf="editar">
+				Añadir Anexos al Expediente
+			</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col text-danger mt-2">
+			<p class="text-end" *ngIf="campoNoValido('id_categoria')">* Seleccione un rango</p>
+			<p class="text-end" *ngIf="campoNoValido('asunto')">* Asunto es requerido</p>
+			<p class="text-end" *ngIf="campoNoValido('entrada')">* Fecha entrada es requerido</p>
+		</div>
+	</div>
+</form>
+
+
+
+
+
+
+
+<!-- ********************************************* Modal Listar Proceso ********************************************* -->
+<ng-template #procesosModal let-modal>	 
+ 		<div class="modal-header">
+			<h4 class="modal-title " id="modal-basic-title"><span class="bs-txt-color">Procesos</span></h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
+		</div>
+		<div class="modal-body">
+		 
+			<div class="text-warning" *ngIf=" !procesos.length ">Sin procesos</div>
+				<table class="table table-striped">
+					<tbody>
+						<tr *ngFor="let item of procesos">
+							<table style="width: 100%;">
+								<tr>
+									<td colspan="2">
+										<span class="float-start">
+											<p class="fs-6 fw-bold">
+											{{ item.tramiteF }}
+											</p>
+										</span>
+										<span class="float-end">
+											<p class="fs-6">{{ item.fechaF }}</p>
+										</span>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div class="col">
+											{{ item.texto }}
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<span class="float-end">
+											<button type="button" class="btn btn-primary" (click)="editaProceso(editProModal, item)"><i class="bi bi-pencil-fill"></i></button>
+											<button type="button" class="btn btn-danger" (click)="delHistorial( item.id )" > <i class="bi bi-trash3-fill"></i></button>
+										</span>
+									</td>
+								</tr>
+							</table>
+						</tr>
+					</tbody>
+				</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-outline-dark" (click)="modal.close()">Cerrar</button>
+		</div>
+</ng-template>
+<!-- ********************************************* Modal Editar proceso ********************************************* -->
+<ng-template #editProModal let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title" id="modal-basic-title">Editar</h4>
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
+	</div>
+	<div class="modal-body">
+		<form [formGroup]="procesoEditForm" >
+			<div>
+				<label for="proTramiteEdit">Tramite</label>
+				<select class="form-select"
+					formControlName="tramite"
+					id="proTramiteEdit" aria-label="Floating label select example">
+					<option value="1" >RECTIFICACI&Oacute;N DE TURNO</option>
+					<option value="2" >TR&Aacute;MITE INICIAL</option>
+					<option value="3" >PRIMERA LECTURA</option>
+					<option value="4" >SEGUNDA LECTURA</option> 
+					<option value="5" >DICTAMINACI&Oacute;N CONJUNTA</option> 
+					<option value="6" >MOCI&Oacute;N SUSPENSIVA</option> 
+					<option value="7" >FUNDAMENTACI&Oacute;N DEL DICTAMEN</option> 
+					<option value="8" >POSICIONAMIENTO DE LOS GRUPOS PARLAMENTARIOS</option> 
+					<option value="9" >DISCUSI&Oacute;N GENERAL</option>
+					<option value="10" >DISCUSI&Oacute;N PARTICULAR</option> 
+					<option value="11" >EFECTOS DE LA DISCUSI&Oacute;N</option> 
+					<option value="12" >SITUACI&Oacute;N EN C&Aacute;MARA DE DIPUTADOS</option>    
+					<option value="13" >PODER EJECUTIVO FEDERAL</option>    
+					<option value="14" >LEGISLATURAS ESTATALES</option>    
+					<option value="15" >COMISIONES</option>    
+					<option value="16" >P&Uacute;BLICADO EN EL DIARIO OFICIAL</option>
+					<option value="17" >DISCUSI&Oacute;N</option>
+					<option value="18" >SEGUIMIENTO</option> 
+					<option value="19" >URGENTE RESOLUCI&Oacute;N</option>
+					<option value="20" >AMPLIACI&Oacute;N DE PLAZO</option>
+					<option value="21" >EXCITATIVA</option>
+					<option value="22" >TEXTO APROBADO</option>
+					<option value="23" >ACUERDO DE LA JUNTA DE COORDINACI&Oacute;N POL&Iacute;TICA</option>
+					<option value="24" >ACUERDO DE LA MESA DIRECTIVA</option>
+					<option value="25" >COMUNICACI&Oacute;N</option>
+					<option value="26" >PROYECTO DE DECLARATORIA</option>
+					<option value="27" >ESCRUTINIO</option>
+					<option value="28" >DECLARATORIA DE APROBACI&Oacute;N</option>
+					<option value="29" >EFECTOS DE LA DECLARATORIA</option>
+					<option value="30" >ART&Iacute;CULO 219 DEL REGLAMENTO DEL SENADO</option>
+					<option value="31" >CONCLUIDO</option>
+					<option value="32" >RETIRADO</option>
+					<option value="33" >RESPUESTA</option>
+
+				</select>
+			</div>
+			<div class="mb-3">
+				<label for="fechaEditPro">Fecha</label>
+				<div class="input-group">
+					<input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker" formControlName="fecha" id="fechaEditPro">
+					<button class="ngbButton calendar" (click)="dp.toggle()" type="button"></button>
+				</div>
+			</div>
+			<div class="row g-2 mb-3">
+				<div class="form-floating">
+					<textarea class="form-control" formControlName="texto" placeholder="Texto" id="proTextoEdit" style="height: 100px"></textarea>
+					<label for="proTextoEdit">Texto </label>
+				</div>
+			</div>
+	  	</form>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-outline-dark" (click)="actualizaProceso()">Guardar</button>
+	</div> 
+</ng-template>
+<!-- ********************************************* Modal Ver y Subir archivo ********************************************* -->
+<ng-template #uploadModal let-modal>
+		 <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Subir Archivo</h5>
+			<button type="button" class="btn-close"  (click)="modal.close()"></button>
+		 </div>
+		 <div class="modal-body">
+			<input type="file"
+			(change)="cargarArchivo($event.target)">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+					  <th scope="col" colspan="2">Archivos</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let archivo of archivos; index as i">
+						<td>
+							<a target="_blank" href='{{base_url}}/api/upload/documentos/{{numero}}/{{archivo.archivo}}'>{{ archivo.archivo }}</a>
+						</td>
+						<td>
+							<span class="float-end">
+								<button type="button" class="btn btn-danger" (click)="delArchivo( archivo.id, archivo.archivo )" > 
+									<i class="bi bi-trash3-fill "></i> 
+								</button>
+							</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+		 </div>
+		 <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" (click)="modal.close()">Cerrar</button>
+			<button type="button" class="btn btn-secondary" (click)="nuevoArchivo()">Subir</button>
+		 </div>
+</ng-template>

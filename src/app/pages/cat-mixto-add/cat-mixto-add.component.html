@@ -1,1 +1,35 @@
+<div class="container"> 
+    <h3>Agregar nueva categoria Mixta</h3>
+    <br>
+        <form  
+            id="frmPwd"
+            autocomplete="=off"
+            [formGroup]="frmPwd">
+            
+            
+          <div class="row">
+            
+            <div class="col-md-5">
+              <label for="nombre" class="txtColorTema">Nombre:</label>
+              <input type="text" class="form-control" id="nombre" formControlName="nombre" style="width: 90%;">
+            </div>
+            
+            <div class="col-md-2 my-auto py-3">
+                <div class="form-check form-switch mt-2"> 
+                  <input class="form-check-input scale-18" type="checkbox" 
+                         role="switch" id="visible" formControlName="visible">
+                  <label class="form-check-label px-2" for="visible">Visible</label>
+                </div>
+            </div>
+            <div class="col-md-5 my-auto">
+              <button type="button" class="btn btn-secondary"  (click)="nuevaCat()">Guardar</button>
+            </div>
+  
+          </div>
+  
+        </form>
+    
+  </div>
+  
  
+  

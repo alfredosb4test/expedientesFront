@@ -48,5 +48,9 @@ export class SettingsService {
   	this.guardarAjustes();
   }
 
+  getTema(){
+    return this.tema;
+  }
+
 }
 

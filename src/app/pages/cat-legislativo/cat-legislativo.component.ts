@@ -35,7 +35,7 @@ export class CatLegislativoComponent implements OnInit {
 
 
   loadPage(page: number) {
-    console.log("pagina:", page + ' | previousPage: ',this.previousPage);
+     
     
     if (page !== this.previousPage) {
       this.previousPage = page;

@@ -1,0 +1,93 @@
+<div class="modal-body">
+    <form [formGroup]="editExpForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-3">
+            <div class="form-floating">
+                <input type="text" class="form-control" formControlName="numero" id="ctrl1" placeholder="Num. de Expediente">
+                <label for="numero">Num. de Expediente</label>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="form-floating">
+                <select class="form-select" formControlName="estatus" id="ctrl5" aria-label="Floating label select example">
+                    <option value='NA'>Seleccione una Opci&oacute;n</option>
+                    <option value='PCS'   >Pendiente en Comisiones del Senado</option>
+                    <option value='PCCD'  >Pendiente en Comisiones C&aacute;mara de Diputados</option>
+                    <option value='PJCP'  >Pendiente en la Junta de Coordinaci&oacute;n Pol&iacute;tica</option>
+                    <option value='PCD'   >Pendiente en C&aacute;mara de Diputados</option>
+                    <option value='PS'    >Pendiente en C&aacute;mara de Senadores</option>
+                    <option value='PMD'   >En poder de la Mesa Directiva</option>
+                    <option value='LE'    >Legislatura de los Estados</option>
+                    <option value='QE'    >Quedo de Enterado</option>
+                    <option value='PL'    >Primera Lectura</option>
+                    <option value='SL'    >Segunda Lectura</option>
+                    <option value='A'     >Aprobado en el Senado</option>
+                    <option value='ACD'   >Aprobado en C&aacute;mara de Diputados</option>
+                    <option value='ACP'   >Aprobado por la Comisi&Oacute;n Permanente</option>
+                    <option value='O'     >Observado</option>
+                    <option value='C'     >Concluido</option>
+                    <option value='PDOF'  >Publicado en el DOF</option>
+                    <option value='PP'    >Pendiente de P&uacute;blicaci&oacute;n</option>
+                    <option value='PAM'   >Pendiente en Ambas C&aacute;maras</option>
+                    <option value='PCCP'  >Pendiente en Comisiones de la Comisi&oacute;n Permanente</option>
+                    <option value='RETIRADO' >Retirado</option>
+                </select>
+                <label for="ctrl5">Estado Procesal</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-6">
+            <div class="form-floating">
+                <select class="form-select" formControlName="tramite" id="lbl_tramite" aria-label="">
+                    <option value='NA'>Seleccione una Opci&oacute;n</option>
+                    <option value='NL' >Nueva Ley</option>
+                    <option value='RLE' >Reforma a Ley Existente</option>
+                    <option value='RC' >Reforma Constitucional</option>
+                    <option value='II' >Instrumento Internacional</option>      
+                    <option value='NLRLE' >Nueva Ley y Reforma a Ley Existente</option>
+                    <option value='MRC' >Modificaci&oacute;n de Reforma al C&oacute;digo</option>
+                    <option value='MRS' >Modificaci&oacute;n al Reglamento del Senado</option> 
+                </select>
+                <label for="lbl_tramite">Tramite de Ley o Decreto</label>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-floating">
+                <select class="form-select" formControlName="fraccion" id="lbl_Autor" aria-label="">
+                    <option value='NA'>Seleccione una Opci&oacute;n</option>
+  
+                    <option value='MORENA'  >MORENA</option>
+                    <option value='PAN'     >PAN</option>
+                    <option value='PRI'     >PRI</option>
+                    <option value='PRD'     >PRD</option>
+                    <option value='PT'      >PT</option>
+                    <option value='MC'      >MC</option>
+                    <option value='PVEM'    >PVEM</option>      
+                    <option value='PES'     >PES</option>
+                    <option value='SG'      >SG</option>      
+                    <option value='C'       >CONJUNTAS</option>
+                    <option value='CONG'    >CONGRESOS</option>
+                    <option value='EJFED'   >EJECUTIVO FEDERAL</option>
+                    <option value='CD'      >CÁMARA DE DIPUTADOS</option>
+                    <option value='CL'      >CONGRESOS LOCALES</option>
+                </select>
+                <label for="lbl_Autor">Autor</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <button type="submit" class="btn btn-outline-primary float-end" aria-controls="collapseExample">
+                {{ btn_txt }}
+            </button>
+        </div>
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="col text-danger mt-3">
+        <p class="text-end" *ngIf="campoNoValido('numero')">* Ingrese un Num. de Expediente</p> 
+    </div>
+</div>
+</div>

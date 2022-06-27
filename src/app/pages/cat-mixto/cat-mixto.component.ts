@@ -39,8 +39,7 @@ export class CatMixtoComponent implements OnInit {
   }
 
   loadPage(page: number) {
-    console.log("pagina:", page);
-    
+        
     if (page !== this.previousPage) {
       this.previousPage = page;
       this.loadData(this.previousPage);
@@ -50,7 +49,7 @@ export class CatMixtoComponent implements OnInit {
   loadData(page) {
     this.catServices.getCatMixtas(page, this.pageSize)
     .subscribe( resp=>{ 
-      console.log(resp);
+      
       this.totalItems = resp.total;
       this.pageSize = resp.regsAMostrar;
       this.catMix = resp.catMix;

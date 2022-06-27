@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { SidebarService } from 'src/app/services/sidebar.service';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 
@@ -18,7 +19,9 @@ export class HeaderComponent implements OnInit {
  // public nav: boolean = true;
 
 
-  constructor(private usuarioService: UsuarioService, private sidebarService: SidebarService) {
+  constructor(private usuarioService: UsuarioService, 
+              private sidebarService: SidebarService,
+              private router: Router ) {
 
   }
 
@@ -39,5 +42,14 @@ export class HeaderComponent implements OnInit {
 
   logout(){
     this.usuarioService.logout();
+  }
+  buscarExpediente( texto: string){
+    texto = texto.trim();
+    if ( texto.length === 0 ) {
+      return;      
+    }
+    console.log(texto);
+    this.router.navigate(['/dashboard/buscarExp', texto]);
+    
   }
 }

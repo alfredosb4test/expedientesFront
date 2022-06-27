@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-3">
+        <div class="input-group mb-3 p-2">
+       
+            <!-- <input type="search"
+                #txtBuscar
+                (keyup.enter)="buscarExpediente(txtBuscar.value)"
+                class="form-control hide" 
+                style="width: 180px;"
+                aria-describedby="helpId" placeholder="Buscar">
+            <button type="button" class="btn btn-outline-primary"
+                    (click)="buscarExpediente(txtBuscar.value)">Buscar</button> -->
+
+            
+            
+            
+        </div>
+    </div>
+    <div class="col-9">
+        <span *ngIf="totalItems" class="d-flex justify-content-end p-2"> 
+        
+          <ngb-pagination [collectionSize]="totalItems"
+                          [(page)]="page" 
+                          [pageSize]="pageSize"
+                          [maxSize]="17" 
+                          [rotate]="true" 
+                          [ellipses]="false" 
+                          [boundaryLinks]="true"
+                          (pageChange)="loadPage($event)">
+          </ngb-pagination>
+        
+          <select class="custom-select hide" style="width: auto; display: none;" [(ngModel)]="pageSize" (ngModelChange)="loadData(page)">
+              <option [ngValue]="10">10 items por pagina</option>
+              <option [ngValue]="50">50 items por pagina</option>
+              <option [ngValue]="150">150 items por pagina</option>
+            </select>
+        </span>
+    </div>
+</div>
+<!-- *ngIf="load" -->
+<div class="contLoader" *ngIf="load">
+    <div class="lds-roller start-50 mt-5" ><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>
+  
+<table class="table table-striped" width="100%">
+    <thead>
+    <tr>
+      <th scope="col">Expedientes</th>
+    </tr>
+    </thead>
+    <tbody style=" overflow: auto;height: 650px;">
+    <tr *ngFor="let item of catExp; let i = index " width="100%">
+      <!-- <th width="30" scope="row">{{ (i + 1)+((page-1) * pageSize) }}</th> -->
+      <td width="100%">
+        <table width="100%">
+            <tr>
+                <td style="display: revert; width:90px;">
+                    <span style="font-size: 12px;">Exp #<br></span>
+                    <div style="font-weight: bold; text-align: center; width:90px;"><a [routerLink]="['/dashboard/buscarDocs', item.id_expediente, item.numero]" >{{ item.numero }}</a></div>
+                </td>
+                <td *ngIf="item.docs.id_documento != 0">                    
+                    <span class="float-end">
+                        <button type="button" class="btn btn-danger" (click)="delDocumento( item.docs[0].id_expediente, item.numero )" > <i class="bi bi-trash3-fill"></i></button>
+                    </span>
+                    <div style="margin-top: -5px; color: #0091c9;">{{ item.docs[0].asunto }}</div>
+                    <div style="color: #185009; font-style: italic;">
+                        {{ item.docs[0].periodo2 }} {{ item.docs[0].tipoperiodo2 }} {{ item.docs[0].annus2 }} {{ item.docs[0].legislatura2 }}
+                    </div>    
+                    <br>
+                    <span style="font-weight: bold;font-size: 12px;">AUTOR:</span> {{ item.docs[0].autor }}
+                    <br>
+                    <span style="font-weight: bold;font-size: 12px;">TURNO:</span> {{ item.docs[0].turno }}
+                    <br>
+                    <span style="font-weight: bold;font-size: 12px;">ENTRADA:</span> {{ item.docs[0].entradaF }}
+                    <br>
+                    <span *ngIf="item.docs[0].apruebaF"><span style="font-weight: bold;font-size: 12px;">APROBADO:</span> {{ item.docs[0].apruebaF }}</span>
+                </td>
+                <td *ngIf="item.docs.id_documento == 0" width="100%">  
+                    <span class="float-end">
+                        <button type="button" class="btn btn-danger" (click)="delDocumento( item.id_expediente, item.numero )" > <i class="bi bi-trash3-fill"></i></button>
+                    </span>
+                    <div class="text-warning" >Sin Documentos.</div>
+                </td>
+            </tr>
+        </table>
+        
+      </td>
+ 
+    </tr>
+    </tbody>
+</table>
+  
+ 

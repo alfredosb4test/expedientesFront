@@ -18,8 +18,8 @@ import { SettingsService } from 'src/app/services/settings.service';
 export class LoginComponent implements OnInit {
   formSubmitted:boolean = false;
   public formLogin = this.fb.group({
-    usuario:[localStorage.getItem('usuario') || 'eusebio.tovar', [Validators.required, Validators.minLength(3)] ],
-    pwd:['t0v4r.VsH2', [Validators.required, Validators.minLength(3)] ],
+    usuario:[localStorage.getItem('recordar') || 'alfredo.sanchez', [Validators.required, Validators.minLength(3)] ],
+    pwd:['1111', [Validators.required, Validators.minLength(3)] ],
     recordar:[''],
     login:[true]
   });
