@@ -29,8 +29,7 @@ export class SidebarService {
     menu.classList.add('verMenu2');
     contenido.classList.remove('sinMenu');
     contenido.classList.add('conMenu');
-    this.nav=true;
-    console.log('verMenu');
+    this.nav=true; 
     
   }
   ocultaMenu(){ 
@@ -41,6 +40,5 @@ export class SidebarService {
     contenido.classList.remove('conMenu');
     contenido.classList.add('sinMenu');
     this.nav=false;
-    console.log('ocultaMenu');
   }
 }

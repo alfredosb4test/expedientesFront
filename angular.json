@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "zitrocrm": {
+    "expedientes": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": ["chart.js"],
-            "outputPath": "dist/zitrocrm",
+            "outputPath": "dist/expedientes",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,14 +72,14 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "zitrocrm:build:production"
+              "browserTarget": "expedientes:build:production"
             },
             "development": {
-              "browserTarget": "zitrocrm:build:development"
+              "browserTarget": "expedientes:build:development"
             }
           },
           "options":{
-            "browserTarget": "zitrocrm:build",
+            "browserTarget": "expedientes:build",
             "proxyConfig": "src/proxy.conf.json"
           },
           "defaultConfiguration": "development"
@@ -87,7 +87,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "zitrocrm:build"
+            "browserTarget": "expedientes:build"
           }
         },
         "test": {
@@ -111,5 +111,5 @@
       }
     }
   },
-  "defaultProject": "zitrocrm"
+  "defaultProject": "expedientes"
 }

@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col">
-		<h4 *ngIf="editar">{{numero}}</h4>
+		<h4 *ngIf="editar">&nbsp;Número: &nbsp;{{numero}}</h4>
 	</div>
 	<div class="col">
 		<div class="float-end hand" [routerLink]="['/dashboard/buscarDocs', id_expediente, numero]">Regresar</div> 
@@ -182,7 +182,7 @@
 					<div class="row g-2 mb-3">
 							<div class="form-floating">
 								<select class="form-select"
-								formControlName="proTramite" id="proTramite" aria-label="Floating label select example">
+									formControlName="proTramite" id="proTramite" aria-label="Floating label select example">
 									<option value="1" >RECTIFICACI&Oacute;N DE TURNO</option>
 									<option value="2" >TR&Aacute;MITE INICIAL</option>
 									<option value="3" >PRIMERA LECTURA</option>
@@ -241,9 +241,9 @@
 							<button type="button" 
 									(click)="verProcesos()"
 									class="btn btn-outline-primary" aria-controls="collapseExample">
-								Ver Procesos
+								Ver Procesos ({{n_procesos}})
 							</button>
-							<button type="submit"  class="btn btn-outline-primary" aria-controls="collapseExample">
+							<button type="submit"  class="btn btn-outline-primary" aria-controls="collapseExample" *ngIf="accesoUsr == 5">
 								Guardar Proceso
 							</button>
 						</div>
@@ -373,7 +373,7 @@
 </div>
 	<div class="row"> 
 		<div class="col align-self-end">
-			<button type="submit" class="btn btn-outline-primary float-end" aria-controls="collapseExample">
+			<button type="submit" class="btn btn-outline-primary float-end" aria-controls="collapseExample" *ngIf="accesoUsr == 5">
 				{{ btn_txt }}
 			</button>
 			<button type="button" (click)="verArchivos()" class="btn btn-outline-primary float-end" aria-controls="collapseExample" *ngIf="editar">
@@ -431,7 +431,7 @@
 								<tr>
 									<td colspan="2">
 										<span class="float-end">
-											<button type="button" class="btn btn-primary" (click)="editaProceso(editProModal, item)"><i class="bi bi-pencil-fill"></i></button>
+											<button type="button" class="btn btn-primary" (click)="editaProcesoModal(editProModal, item)"><i class="bi bi-pencil-fill"></i></button>
 											<button type="button" class="btn btn-danger" (click)="delHistorial( item.id )" > <i class="bi bi-trash3-fill"></i></button>
 										</span>
 									</td>
@@ -442,7 +442,7 @@
 				</table>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-outline-dark" (click)="modal.close()">Cerrar</button>
+			<button type="button" class="btn btn-secondary" (click)="modal.close()">Cerrar</button>
 		</div>
 </ng-template>
 <!-- ********************************************* Modal Editar proceso ********************************************* -->
@@ -497,7 +497,7 @@
 			<div class="mb-3">
 				<label for="fechaEditPro">Fecha</label>
 				<div class="input-group">
-					<input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker" formControlName="fecha" id="fechaEditPro">
+					<input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker" formControlName="fechaF" id="fechaF">
 					<button class="ngbButton calendar" (click)="dp.toggle()" type="button"></button>
 				</div>
 			</div>
@@ -510,7 +510,7 @@
 	  	</form>
 	</div>
 	<div class="modal-footer">
-	  <button type="button" class="btn btn-outline-dark" (click)="actualizaProceso()">Guardar</button>
+	  <button type="button" class="btn btn-secondary" (click)="actualizaProceso()">Guardar</button>
 	</div> 
 </ng-template>
 <!-- ********************************************* Modal Ver y Subir archivo ********************************************* -->
@@ -521,7 +521,7 @@
 		 </div>
 		 <div class="modal-body">
 			<input type="file"
-			(change)="cargarArchivo($event.target)">
+			(change)="cargarArchivo($event.target)" *ngIf="accesoUsr == 5">
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -534,7 +534,7 @@
 							<a target="_blank" href='{{base_url}}/api/upload/documentos/{{numero}}/{{archivo.archivo}}'>{{ archivo.archivo }}</a>
 						</td>
 						<td>
-							<span class="float-end">
+							<span class="float-end" *ngIf="accesoUsr == 5">
 								<button type="button" class="btn btn-danger" (click)="delArchivo( archivo.id, archivo.archivo )" > 
 									<i class="bi bi-trash3-fill "></i> 
 								</button>
@@ -547,6 +547,6 @@
 		 </div>
 		 <div class="modal-footer">
 			<button type="button" class="btn btn-secondary" (click)="modal.close()">Cerrar</button>
-			<button type="button" class="btn btn-secondary" (click)="nuevoArchivo()">Subir</button>
+			<button type="button" class="btn btn-secondary" (click)="nuevoArchivo()" *ngIf="accesoUsr == 5">Subir</button>
 		 </div>
 </ng-template>

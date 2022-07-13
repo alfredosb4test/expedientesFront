@@ -11,7 +11,7 @@
   <tbody>
   <tr *ngFor="let item of catMix; let i = index ">
     <th width="30" scope="row">{{ (i + 1)+((page-1) * pageSize) }}</th>
-    <td (click)="openModal(addCatLegModal, item)">
+    <td (click)="openModal(addCatLegModal, item)" [ngClass]="accesoUsr == 5 ? 'hand' : ''" >
       {{ item.categoria }}
     </td>
     <td width="50">  

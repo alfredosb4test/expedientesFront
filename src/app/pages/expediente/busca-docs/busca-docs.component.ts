@@ -8,6 +8,7 @@ import { delay } from 'rxjs/operators';
 
 import { Documento } from 'src/app/models/documentos.models';
 import { ExpedienteService } from 'src/app/services/expedientes.service';
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 
 
 @Component({
@@ -20,22 +21,27 @@ export class BuscaDocsComponent implements OnInit {
 
   @ViewChild('editExpModal') private editExpModal;
 
-  documentos: Documento[] = [];
-  id_expediente: number;
-  numero: string;
-  constructor( private activateRouter:ActivatedRoute,
-    private expService: ExpedienteService,
-    private _location: Location,
-    private modalService: NgbModal,
-    public fb: FormBuilder,
-    private router: Router  ) { }
-    private verEditExpModal;
-    public datosEdit;
-    private isSubmitted: boolean;
-    public loadExp: boolean = false;
+  public documentos: Documento[] = [];
+  public id_expediente: number;
+  public numero: string;
+  private verEditExpModal;
+  public datosEdit;
+  private isSubmitted: boolean;
+  public loadExp: boolean = false;
+  public accesoUsr:number;
+  constructor(  private activateRouter:ActivatedRoute,
+                private expService: ExpedienteService,
+                private _location: Location,
+                private modalService: NgbModal,
+                public fb: FormBuilder,
+                private usuarioService:UsuarioService,
+                private router: Router  ) { }
 
+
+    
 
   ngOnInit(): void {
+    this.accesoUsr = this.usuarioService.getAcceso();
     this.activateRouter.params.subscribe( paramas =>{
       this.id_expediente = paramas.id_expediente;
       this.numero = paramas.numero.replace(' ', '_');
@@ -43,7 +49,7 @@ export class BuscaDocsComponent implements OnInit {
         .subscribe( resp =>{
           this.loadExp = true;
           this.documentos = resp.expDoc;
-          console.log( 'docs', this.documentos );
+         // console.log( 'docs', this.documentos );
         }, err => {
           console.log(err);
           
@@ -77,8 +83,9 @@ export class BuscaDocsComponent implements OnInit {
     this.router.navigate(['/dashboard/insertDoc'], { queryParams: { accion: 'insertar', id_expediente, numero }  } );
   }
 
-  delDocumento( id_documento ){
+  delDocumento( id_documento, numero ){
     console.log(id_documento);
+    console.log('numero', numero);
     Swal.fire({
       title: 'Eliminar documento?', 
       icon: 'warning',
@@ -90,7 +97,7 @@ export class BuscaDocsComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        this.expService.delDocumento( id_documento )
+        this.expService.delDocumento( id_documento, numero )
           .subscribe( resp =>{
             if (resp.ok) {
               Swal.fire(
@@ -160,7 +167,13 @@ export class BuscaDocsComponent implements OnInit {
       console.log(resp.expediente[0]);
       this.datosEdit = resp.expediente[0];
       if( resp.ok ){
-        this.verEditExpModal = this.modalService.open( this.editExpModal, { centered: true, size: 'lg'  });
+        this.verEditExpModal = this.modalService.open( this.editExpModal, {
+          centered: true,
+          windowClass: 'modalTheme',
+          size: 'lg',
+          backdrop: 'static'
+          });
+          //, { centered: true, size: 'lg'  });
       }
     }); 
   }

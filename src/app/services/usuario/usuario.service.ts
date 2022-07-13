@@ -18,21 +18,11 @@ export class UsuarioService {
 
   validarToken(): Observable<boolean>{
     this.base_url = urlLocal;
-    const token = localStorage.getItem('token') || '';
-    console.log(this.base_url, '/', token);
-    
-    return this.http.get(`${ this.base_url }/api/login/renew`, {
-      headers:{
-        'x-token': token
-      }
-    }).pipe(
+    //const token = localStorage.getItem('token') || '';
+    //console.log(this.base_url, '/', token);
+    return this.http.get(`${ this.base_url }/api/login/renew`).pipe(
       map( (resp:any)=>{
-        const { activo,
-          clave,
-          id,
-          n_acceso,
-          usuario,
-          imagen } = resp.usuario;
+        const { activo, clave, id, n_acceso, usuario, imagen } = resp.usuario;
         this.usuario = new Usuario(
           activo,
           clave,
@@ -41,7 +31,7 @@ export class UsuarioService {
           usuario,
           imagen
         )
-        console.log('validarToken this.usuario',this.usuario);
+        //console.log('validarToken this.usuario',this.usuario);
         
         localStorage.setItem('token', resp.token);
         return true;
@@ -54,5 +44,8 @@ export class UsuarioService {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/login');
     document.body.style.backgroundColor = 'white';
+  }
+  getAcceso(): number{
+    return this.usuario.n_acceso;
   }
 }

@@ -19,6 +19,7 @@ import { FrmDocComponent } from './expediente/frm-doc/frm-doc.component';
 import { NuevoExpComponent } from './expediente/nuevo-exp/nuevo-exp.component';
 import { FrmExpedienteComponent } from '../components/frm-expediente/frm-expediente.component';
 import { ReporteExpedienteComponent } from './expediente/reporte-expediente/reporte-expediente.component';
+import { AdminGuard } from '../guards/admin.guard';
 
 const routes: Routes = [
    { 
@@ -31,15 +32,15 @@ const routes: Routes = [
          { path: 'settings', component: SettingsComponent, data:{ titulo: '> Bienvenid@'}  }, 
          { path: 'perfil', component: PerfilComponent, data:{ titulo: '> Perfil'}  },         
          { path: 'catMixto', component: CatMixtoComponent, data:{ titulo: '> Categoria Mixto'}  },          
-         { path: 'catMixtoFrm', component: CatMixtoAddComponent, data:{ titulo: '> Nueva Categoria Mixto'}  },          
+         { path: 'catMixtoFrm', canActivate: [ AdminGuard ], component: CatMixtoAddComponent, data:{ titulo: '> Nueva Categoria Mixto'}  },          
          { path: 'listleg', component: CatLegislativoComponent, data:{ titulo: '> Categoria Legislativa'}  },   
-         { path: 'catLegFrm', component: CatLegislativoAddComponent, data:{ titulo: '> Nueva Categoria Legislativa'}  }, 
+         { path: 'catLegFrm', canActivate: [ AdminGuard ], component: CatLegislativoAddComponent, data:{ titulo: '> Nueva Categoria Legislativa'}  }, 
          
          { path: 'expedientes', component: ListExpedienteComponent, data:{ titulo: '> Listar Expedientes'}  },
-         { path: 'formularioExperiente', component: NuevoExpComponent, data:{ titulo: '> Nuevo Expediente'}  },
+         { path: 'formularioExperiente', canActivate: [ AdminGuard ], component: NuevoExpComponent, data:{ titulo: '> Nuevo Expediente'}  },
          { path: 'buscarExp/:texto', component: BuscaExpComponent, data:{ titulo: '> Buscar Expediente'}  },
          { path: 'buscarDocs/:id_expediente/:numero', component: BuscaDocsComponent, data:{ titulo: '> Buscar Documentos'}  },
-         { path: 'insertDoc', component: FrmDocComponent, data:{ titulo: '> Nuevo Documento'}  },
+         { path: 'insertDoc', canActivate: [ AdminGuard ], component: FrmDocComponent, data:{ titulo: '> Nuevo Documento'}  },
          { path: 'editDoc', component: FrmDocComponent, data:{ titulo: '> Editar Documento'}  },
          { path: 'reporte', component: ReporteExpedienteComponent, data:{ titulo: '> Reporte Expedientes'}  },
 

@@ -1,30 +1,30 @@
 
 <table class="table table-striped">
     <thead>
-    <tr height="50">
-        <th scope="col" valign="top" width="200">Documentos</th>
+    <tr height="50" *ngIf="accesoUsr == 5">
+        <th scope="col" valign="top" width="200"><i class="bi bi-files" style="font-size: 22px; color: rgb(57, 134, 45);"></i>&nbsp;<span class="fs-5 fst-italic">Documentos</span></th>
         <th scope="col" valign="top"> 
             
             <span style="margin-top: -8px;" class="hand"
                  (click)="editarExpeModal( id_expediente, numero )" >
-                <i class="bi bi-pencil-square" style="font-size: 22px; color: rgb(57, 134, 45);"></i> Editar Expediente
+                <i class="bi bi-pencil-square" style="font-size: 22px; color: rgb(57, 134, 45);"></i> <span class="link">Editar Expediente</span>
             </span>    
-            /
+            <span class="fw-bold px-4">|</span>
             <span style="margin-top: -8px;" class="hand"
                  (click)="insertarDoc( id_expediente, numero )" >
-                <i class="bi bi-folder-plus" style="font-size: 22px; color: rgb(57, 134, 45);"></i> Nuevo Documento
+                <i class="bi bi-file-earmark-plus-fill" style="font-size: 22px; color: rgb(57, 134, 45);"></i> <span class="link">Nuevo Documento</span>
             </span>    
         </th>
-        <th (click)="backClicked()" class="text-end hand" valign="top">Regresar</th>
+        <th (click)="backClicked()" class="text-end hand pt-3" valign="top">Regresar</th>
     </tr>
     </thead>
     <tbody >
     <tr *ngFor="let item of documentos; let i = index ">
       <!-- <th width="30" scope="row">{{ (i + 1)+((page-1) * pageSize) }}</th> -->
       <td colspan="3">
-        <span class="float-end">
+        <span class="float-end" *ngIf="accesoUsr == 5">
             <button type="button" class="btn btn-primary" (click)="duplicaDocumento( item.id_documento )"><i class="bi bi-files"></i></button>
-            <button type="button" class="btn btn-danger" (click)="delDocumento( item.id_documento )" > <i class="bi bi-trash3-fill"></i></button>
+            <button type="button" class="btn btn-danger" (click)="delDocumento( item.id_documento, numero )" > <i class="bi bi-trash3-fill"></i></button>
         </span>
         <table style="font-size: 12px; ">
             <tr>
@@ -35,7 +35,7 @@
                     <!-- [routerLink]="['/dashboard/editDoc']"
                     [queryParams] = "item" -->
                     <div style="text-align: justify;" class="hand"
-                    (click)="editarDoc( item, numero )" >{{ item.np }} {{ item.tp }} {{ item.annusF }} {{ item.legislaturaF }} </div>
+                    (click)="editarDoc( item, numero )" ><span class="link">{{ item.np }} {{ item.tp }} {{ item.annusF }} {{ item.legislaturaF }} </span></div>
                 </td>
             </tr>
             <tr *ngIf="item.categoria?.length > 0">
@@ -195,7 +195,7 @@
       </div>
 </div>
 
-<ng-template #DOFModal let-modal class=" modalTheme">
+<ng-template #DOFModal let-modal  class=" modalTheme">
     <div class="modal-header">
       <h5 class="modal-title txtColorTema" id="exampleModalLabel">Texto del Diario Oficial</h5>
       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss()"></button>
@@ -212,7 +212,7 @@
     </div>
   </ng-template>
 
-  <ng-template #editExpModal let-modal class=" modalTheme">
+  <ng-template #editExpModal let-modal  class=" modalTheme">
     <div class="modal-header">
       <h5 class="modal-title txtColorTema" id="exampleModalLabel">Editar Expediente</h5>
       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss()"></button>

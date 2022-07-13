@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CatLeg } from 'src/app/models/categorias.models';
 import { CatalogosService } from 'src/app/services/catalogos.service';
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,6 +19,7 @@ export class CatLegislativoComponent implements OnInit {
   totalItems: number = 0;
   previousPage: any;
   catMix: CatLeg[] = [];
+  accesoUsr = 0;
 
   public frmAddCat = this.fb.group({
     id_cl:[''],
@@ -27,16 +29,16 @@ export class CatLegislativoComponent implements OnInit {
 
   constructor(private fb: FormBuilder, 
     private modalService: NgbModal,
+    private usuarioService: UsuarioService,
     private catServices: CatalogosService) { }
   ngOnInit(): void {
+    this.accesoUsr = this.usuarioService.getAcceso();
     this.loadData(1);
     this.pageSize = 10;
   }
 
 
   loadPage(page: number) {
-     
-    
     if (page !== this.previousPage) {
       this.previousPage = page;
       this.loadData(this.previousPage);
@@ -53,7 +55,9 @@ export class CatLegislativoComponent implements OnInit {
   }
 
 
-  openModal( targetModal:any, categoriaEdit: CatLeg ) {
+  openModal( targetModal:any, categoriaEdit: CatLeg ) {    
+    if( this.accesoUsr !== 5)
+      return;
     const modalRef = this.modalService.open(targetModal, {
       centered: true,
       windowClass: 'modalTheme',

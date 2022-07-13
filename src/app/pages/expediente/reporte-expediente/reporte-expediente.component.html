@@ -193,7 +193,9 @@
                             <tr>
                                 <td style="font-weight: bold;font-size: 12px;" width="100" class="text-end">Periodo:</td>
                                 <td >
-                                    <div style="text-align: justify;padding-left: 9px;" class="hand">{{ item.periodo2 }} {{ item.tipoperiodo2 }} {{ item.annus2 }} {{ item.legislatura2 }}</div>
+                                    <div style="text-align: justify;padding-left: 9px;" class="hand">
+                                        <span class="link">{{ item.periodo2 }} {{ item.tipoperiodo2 }} {{ item.annus2 }} {{ item.legislatura2 }}</span>
+                                    </div>
                                 </td>
                             </tr>
                             <tr *ngIf="item.asunto">

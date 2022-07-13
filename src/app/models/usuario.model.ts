@@ -6,7 +6,7 @@ export class Usuario{
         public activo?: string,
         public clave?: string,
         public id?: string,
-        public n_acceso?: string,
+        public n_acceso?: number,
         public usuario?: string,
         public imagen?: string,
     ){}
