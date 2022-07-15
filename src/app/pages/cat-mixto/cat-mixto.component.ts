@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CatMix } from 'src/app/models/categorias.models';
 import { CatalogosService } from 'src/app/services/catalogos.service';
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,6 +20,7 @@ export class CatMixtoComponent implements OnInit {
   totalItems: number = 0;
   previousPage: any;
   catMix: CatMix[] = [];
+  accesoUsr = 0;
 
   public frmAddCat = this.fb.group({
     id_categoria_mixto:[''],
@@ -28,14 +30,13 @@ export class CatMixtoComponent implements OnInit {
 
   constructor(private fb: FormBuilder, 
     private modalService: NgbModal,
+    private usuarioService: UsuarioService,
     private catServices: CatalogosService) { }
 
   ngOnInit(): void {
+    this.accesoUsr = this.usuarioService.getAcceso();
     this.loadData(1);
     this.pageSize = 10;
-
- 
-
   }
 
   loadPage(page: number) {
@@ -58,7 +59,9 @@ export class CatMixtoComponent implements OnInit {
     });
   }
 
-  openModal( targetModal:any, categoriaEdit: CatMix ) {
+  openModal( targetModal:any, categoriaEdit: CatMix ) {    
+    if( this.accesoUsr !== 5)
+      return;
     const modalRef = this.modalService.open(targetModal, {
       centered: true,
       windowClass: 'modalTheme',

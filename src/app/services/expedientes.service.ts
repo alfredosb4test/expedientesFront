@@ -18,11 +18,7 @@ export class ExpedienteService {
   getExpedientes( pag: number = 1, pageSize: number = 10): Observable<any>{
     const token = localStorage.getItem('token') || ''; 
  
-    return this.http.get(`${ this.base_url }/api/expedientes/getExpedientes/${pag}/${pageSize}`, {
-      headers:{
-        'x-token': token
-      }
-    }).pipe(
+    return this.http.get(`${ this.base_url }/api/expedientes/getExpedientes/${pag}/${pageSize}`).pipe(
       map( (items:any) => {          
           items.catExp = items.catExp.filter( (expe, index, arr)=>  ( expe.id_expediente != arr[index - 1]?.id_expediente ) ? expe : null );
           return items;
@@ -54,11 +50,7 @@ export class ExpedienteService {
   getExpediente( id_expediente ): Observable<any>{
     const token = localStorage.getItem('token') || ''; 
  
-    return this.http.get(`${ this.base_url }/api/expedientes/getExpediente/${id_expediente}`, {
-      headers:{
-        'x-token': token
-      }
-    });
+    return this.http.get(`${ this.base_url }/api/expedientes/getExpediente/${id_expediente}`);
   } 
 
   buscarExpediente( buscar: string ): Observable<any>{
@@ -126,8 +118,8 @@ export class ExpedienteService {
   actualizaDoc( documento ): Observable<any>{
     return this.http.put(`${ this.base_url }/api/documentos/editDoc/`,  documento )
   }
-  delDocumento( id ): Observable<any>{
-    return this.http.delete(`${ this.base_url }/api/documentos/delDocumento/${ id }`)
+  delDocumento( id, numero ): Observable<any>{
+    return this.http.delete(`${ this.base_url }/api/documentos/delDocumento/${ id }/${ numero }`)
   }
   duplicaDoc( id_documento ): Observable<any>{
     return this.http.post(`${ this.base_url }/api/documentos/duplicaDoc/${id_documento}`, {})

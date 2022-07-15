@@ -56,10 +56,12 @@
             <tr>
                 <td style="display: revert; width:90px;">
                     <span style="font-size: 12px;">Exp #<br></span>
-                    <div style="font-weight: bold; text-align: center; width:90px;"><a [routerLink]="['/dashboard/buscarDocs', item.id_expediente, item.numero]" >{{ item.numero }}</a></div>
+                    <div style="font-weight: bold; text-align: center; width:90px;"><a class="text-success" [routerLink]="['/dashboard/buscarDocs', item.id_expediente, item.numero]" >
+                        <span class="link">{{ item.numero }}</span></a>
+                    </div>
                 </td>
                 <td *ngIf="item.docs.id_documento != 0">                    
-                    <span class="float-end">
+                    <span class="float-end" *ngIf="accesoUsr == 5">
                         <button type="button" class="btn btn-danger" (click)="delDocumento( item.docs[0].id_expediente, item.numero )" > <i class="bi bi-trash3-fill"></i></button>
                     </span>
                     <div style="margin-top: -5px; color: #0091c9;">{{ item.docs[0].asunto }}</div>
@@ -76,7 +78,7 @@
                     <span *ngIf="item.docs[0].apruebaF"><span style="font-weight: bold;font-size: 12px;">APROBADO:</span> {{ item.docs[0].apruebaF }}</span>
                 </td>
                 <td *ngIf="item.docs.id_documento == 0" width="100%">  
-                    <span class="float-end">
+                    <span class="float-end" *ngIf="accesoUsr == 5">
                         <button type="button" class="btn btn-danger" (click)="delDocumento( item.id_expediente, item.numero )" > <i class="bi bi-trash3-fill"></i></button>
                     </span>
                     <div class="text-warning" >Sin Documentos.</div>

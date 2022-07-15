@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SidebarService } from 'src/app/services/sidebar.service';
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
+ 
 
 @Component({
   selector: 'app-sidebar',
@@ -8,38 +9,19 @@ import { SidebarService } from 'src/app/services/sidebar.service';
   ]
 })
 export class SidebarComponent implements OnInit {
-  public menuItems: any[] = [
-    { 
-      titulo: 'Categoria Mixto', 
-      items: 1,
-      submenu:[
-        { titulo: 'Agregar', url: 'catMixtoFrm' },
-        { titulo: 'Listar', url: 'catMixto' },
-      ]
-    },
-    { 
-      titulo: 'Categoria Legislativa', 
-      items: 1,
-      submenu:[
-        { titulo: 'Agregar', url: 'catLegFrm' },
-        { titulo: 'Listar', url: 'listleg' },
-      ]
-    },
-    { 
-      titulo: 'Expedientes', 
-      items: 1,
-      submenu:[
-        { titulo: 'Agregar', url: 'formularioExperiente' },
-        { titulo: 'Listar', url: 'expedientes' },
-        // { titulo: 'Buscar Expediente', url: 'clientes/reporteEvolucion' },
-        // { titulo: 'Buscar Asunto', url: 'clientes/reporteEvolucion' },
-        { titulo: 'Reporte', url: 'reporte' },
-      ]
-    },
-    
-  ];
+  menuAdmin = [
+    {titulo: 'Categoria Mixto', items: 1, submenu:[ { titulo: 'Agregar', url: 'catMixtoFrm' },{ titulo: 'Listar', url: 'catMixto' }]},
+    {titulo: 'Categoria Legislativa', items: 1,submenu:[ {titulo: 'Agregar', url: 'catLegFrm' }, { titulo: 'Listar', url: 'listleg' }]},
+    {titulo: 'Expedientes', items: 1,submenu:[ {titulo: 'Agregar', url: 'formularioExperiente' }, { titulo: 'Listar', url: 'expedientes' },{ titulo: 'Reporte', url: 'reporte' }]}
+  ]
+  menuUser = [
+    {titulo: 'Categoria Mixto', url: 'catMixto'},
+    {titulo: 'Categoria Legislativa', url: 'listleg'},
+    {titulo: 'Expedientes', items: 1,submenu:[ { titulo: 'Listar', url: 'expedientes' },{ titulo: 'Reporte', url: 'reporte' }]}
+  ]
+  public menuItems = []
  
-  constructor(public sidebarService: SidebarService) { 
+  constructor(public userService: UsuarioService) { 
     //this.menuItems = this.cambioMenu;
     //console.log('SidebarComponent::', this.cambioMenu);
     //this.sidebar();
@@ -48,7 +30,12 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const acceso = this.userService.getAcceso();
     
+    if( acceso == 5 )
+      this.menuItems = this.menuAdmin;
+    else
+      this.menuItems = this.menuUser;
   }
   sidebar(){
  

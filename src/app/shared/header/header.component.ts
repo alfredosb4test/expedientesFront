@@ -48,7 +48,6 @@ export class HeaderComponent implements OnInit {
     if ( texto.length === 0 ) {
       return;      
     }
-    console.log(texto);
     this.router.navigate(['/dashboard/buscarExp', texto]);
     
   }

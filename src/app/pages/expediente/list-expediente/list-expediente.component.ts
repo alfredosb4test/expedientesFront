@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 
 import { Expediente } from 'src/app/models/expediente.models';
 import { ExpedienteService } from 'src/app/services/expedientes.service';
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 
 @Component({
   selector: 'app-list-expediente',
@@ -17,13 +18,17 @@ export class ListExpedienteComponent implements OnInit {
   totalItems: number = 0;
   previousPage: any;
   load: boolean = true;
+  accesoUsr:number;
   catExp: Expediente[] = [];
+  
   constructor(private expService: ExpedienteService,
+              private usuarioService:UsuarioService,
               private router: Router ) { }
 
   ngOnInit(): void {
     this.pageSize = 20;
     this.loadData(1);
+    this.accesoUsr = this.usuarioService.getAcceso();
   }
 
 
@@ -38,12 +43,16 @@ export class ListExpedienteComponent implements OnInit {
     this.load = true;
     this.expService.getExpedientes(page, this.pageSize)
     .subscribe( resp=>{
-      console.log('this.catExp', resp);
+      //console.log('this.catExp', resp);
       this.load = false;
       this.totalItems = resp.total;
       this.pageSize = resp.regsAMostrar;
       this.catExp = resp.catExp;
 
+    },error=>{
+      this.load = false;
+      console.log(error);
+      
     });
   }
 

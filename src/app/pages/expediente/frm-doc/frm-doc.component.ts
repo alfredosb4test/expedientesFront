@@ -14,6 +14,7 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 import { CatalogosService } from 'src/app/services/catalogos.service';
 import { environment } from 'src/environments/environment';
 import { SettingsService } from 'src/app/services/settings.service';
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 
 
 const urlLocal = environment.urlLocal;
@@ -34,11 +35,13 @@ export class FrmDocComponent implements OnInit {
   fechadese: NgbDateStruct;
   entrada: NgbDateStruct;
   profFecha: NgbDateStruct;
+  proEditfecha: NgbDateStruct;
   fecha_DOF: NgbDateStruct;
   fechaEditPro: NgbDateStruct;
 
   isSubmitted = false;
   autores: number = 0;
+  n_procesos: number = 0;
   public isCollapsed = true;
 
   registrationForm: FormGroup;
@@ -66,6 +69,7 @@ export class FrmDocComponent implements OnInit {
   private editProModal;
   private verProcesosModal;
   private verUploadModal;
+  public accesoUsr:number;
   
   constructor( public config: NgbInputDatepickerConfig, 
                public calendar: NgbCalendar, 
@@ -76,6 +80,7 @@ export class FrmDocComponent implements OnInit {
                public fb: FormBuilder,
                private expService: ExpedienteService,
                private catService: CatalogosService,
+               private usuarioService:UsuarioService,
                private fileUploadService: FileUploadService, 
                private settingService: SettingsService) { 
       // customize default values of datepickers used by this component tree
@@ -99,10 +104,10 @@ export class FrmDocComponent implements OnInit {
   }
     
   ngOnInit(): void {
+    this.accesoUsr = this.usuarioService.getAcceso();
     if ( this.settingService.getTema() == 'stylesNegro') {
       this.tema = 'dark-modal';
     }
-    console.log( this.tema );
     
     this.cargaCatalogos();
  
@@ -117,8 +122,9 @@ export class FrmDocComponent implements OnInit {
       }
 
       // Editar           
-      console.log('paramsALL ', JSON.parse( params.doc ) );
+      //console.log('paramsALL ', JSON.parse( params.doc ) );
       const documento = JSON.parse( params.doc );      
+      this.n_procesos = Object.keys(documento.procesos).length;
       //console.log('params ',  documento.primera[0].primera );
       // if(Object.keys(documento.procesos).length)
       //   this.procesos = documento.procesos;
@@ -127,7 +133,7 @@ export class FrmDocComponent implements OnInit {
       let desa = parseInt(documento.desa);
       this.id_expediente = documento.id_expediente;
       this.id_documento = documento.id_documento;
-      this.registrationForm.controls['tipoFrm'].setValue('nuevo');
+      this.registrationForm.controls['tipoFrm'].setValue('nuevo');       
       
       if ( Object.keys(documento).length === 0 )
         return;
@@ -286,14 +292,14 @@ export class FrmDocComponent implements OnInit {
       id_documento: [''],
       proTramite: ['', [Validators.required] ],
       proTexto: ['', []],
-      profFecha: ['', []],
+      profFecha: ['0000-00-00', []],
     }); 
 
     this.procesoEditForm = this.fb.group({
       id: [''],
       tramite: ['', [Validators.required] ],
       texto: ['', []],
-      fecha: ['', []],
+      fechaF: [''],
     }); 
  
   }
@@ -354,7 +360,6 @@ export class FrmDocComponent implements OnInit {
     }
   }
   
-
   change(options) {
 
     const select = document.getElementById("listAutor1")
@@ -433,6 +438,7 @@ export class FrmDocComponent implements OnInit {
         .subscribe( (resp:any) =>{
           console.log(resp);
           if( resp.ok ){
+            this.n_procesos++;
             Swal.fire({
               position: 'top-end',
               icon: 'success',
@@ -453,18 +459,25 @@ export class FrmDocComponent implements OnInit {
         });
     }
   }
-  editaProceso(editProModal, proceso){
+  editaProcesoModal(editProModal, proceso){
+    console.log(proceso);
+    
     this.procesoEditForm.patchValue( proceso );
-    if( proceso.fecha ){
+    if( proceso.fechaF ){
+      console.log('editaProcesoModal', proceso.fecha);
+      
       let fecha = proceso.fecha.split('-');
       const obj1 = { year: parseInt( fecha[0] ), month: parseInt( fecha[1] ), day: parseInt( fecha[2] ) };
       this.fechaEditPro = obj1;
-      this.procesoEditForm.controls['fecha'].setValue( this.fechaEditPro );
+      this.procesoEditForm.controls['fechaF'].setValue( this.fechaEditPro );
     }
     this.editProModal = this.modalService.open(editProModal, { centered: true, size: 'xl', backdrop: 'static', modalDialogClass: this.tema });
   }
   actualizaProceso(){
+    console.log('ok1');
+    
     if (!this.procesoEditForm.valid) {
+      console.log('ok2');
       false;
     } else {
       console.log(this.procesoEditForm.value);
@@ -505,6 +518,7 @@ export class FrmDocComponent implements OnInit {
         this.expService.deltHistorial( id )
           .subscribe( resp =>{
             if (resp.ok) {
+              this.n_procesos--;
               Swal.fire(
                 '',
                 'Registro eliminado.',

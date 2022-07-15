@@ -13,28 +13,33 @@ import { ExpedienteService } from 'src/app/services/expedientes.service';
 })
 export class BuscaExpComponent implements OnInit {
   catExp: ExpedienteBuscar[] = [];
-  totalExp: number = 0;
+  encontrado: boolean = true;
   buscar: string;
+  load: boolean = true;
   constructor(  private activateRouter:ActivatedRoute,
                 private router: Router,
                 private expService: ExpedienteService  ) { }
 
   ngOnInit(): void {
-
+    this.load = true;
     this.activateRouter.params.subscribe( paramas =>{
       this.buscar = paramas.texto;
       this.expService.buscarExpediente( this.buscar )
-        .subscribe( resp =>{
+      .subscribe( resp =>{
+          console.log(resp);
+          this.encontrado = true;
+          this.load = false;
           this.catExp = resp.catExp;
-          console.log( this.catExp.length );
-          this.totalExp = this.catExp.length;
+          if( !this.catExp.length )
+            this.encontrado = false;
+          
         })
       
     })
   }
 
   delDocumento( id_expediente, numero ){
-    console.log(id_expediente);
+    
     Swal.fire({
       title: `Eliminar expediente ${numero}?`, 
       icon: 'warning',

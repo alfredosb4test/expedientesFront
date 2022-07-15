@@ -18,8 +18,8 @@ import { SettingsService } from 'src/app/services/settings.service';
 export class LoginComponent implements OnInit {
   formSubmitted:boolean = false;
   public formLogin = this.fb.group({
-    usuario:[localStorage.getItem('recordar') || 'alfredo.sanchez', [Validators.required, Validators.minLength(3)] ],
-    pwd:['1111', [Validators.required, Validators.minLength(3)] ],
+    usuario:[localStorage.getItem('recordar') || '', [Validators.required, Validators.minLength(3)] ],
+    pwd:['', [Validators.required, Validators.minLength(3)] ],
     recordar:[''],
     login:[true]
   });
@@ -27,6 +27,9 @@ export class LoginComponent implements OnInit {
     txtCorreo:['', [Validators.required, Validators.minLength(3)] ],
     recuperaPwd:[true]
   });
+
+  public errServ: boolean = false;
+  public msgServ: string = '';
   
   constructor(private router: Router, 
               private activeRoute: ActivatedRoute,
@@ -35,67 +38,37 @@ export class LoginComponent implements OnInit {
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    const recuerda = localStorage.getItem("recordar") || ''
+    if( recuerda )
+      this.formLogin.controls['recordar'].setValue(true);
   }
 
 
   login( ){
-
-    //  this.loginServ.usuario = new Usuario(
-    //    "2",
-    //    "Gomez",
-    //    "Comercial",
-    //    '', 
-    //    "luisg@operacionesdelnorte.com",
-    //    "Gerentes de Cuenta",
-    //    "65",
-    //    "199",
-    //    "Luis",
-    //    '',
-    //    '',
-    //    "Luis",
-    //    '2',
-    //    ''
-    //  );
-     
-    //  const element = document.querySelector('#login');
-    //  element?.classList.add('animate__animated', 'animate__fadeOut');
- 
-    //  element?.addEventListener('animationend', () => {
-    //    this.router.navigate(["/dashboard/bienvenido"]); return;
-    //  });
-     
-    //  return;
-
     this.formSubmitted = true;
-    console.log('formLogin::',this.formLogin.value);
-  //   return;
+    this.msgServ = '';
+    //console.log('formLogin::',this.formLogin.value); return;
     if( this.formLogin.valid ){
       this.loginServ.login(this.formLogin.value)
-      .subscribe( (resp: any) =>{
-        //this.cdepartamento = resp.data;
-        console.log("loginServ.login", resp);
-        if( resp.data == 'no_existe'){
-          Swal.fire({
-            title: 'Error!',
-            text: 'Usuario no valido',
-            icon: 'error',
-          });
-          return;
+      .subscribe( (resp: any) =>{ 
+        if( !resp.ok ){
+          this.errServ = true;
+          this.msgServ = resp.msg;
+          return
         }
+
         if( this.formLogin.get('recordar')?.value ){
           localStorage.setItem('recordar', this.formLogin.get('usuario')?.value )
         }else{
           localStorage.removeItem('recordar')
         }
         this.loginServ.usuario = resp.usuario;
-
-        console.log( this.loginServ.usuario ); 
         this.router.navigate(["/dashboard/bienvenido"]);
       }, (err)=>{
-         
+        //console.log(err);        
         Swal.fire({
           title: 'Error!',
-          text: err.error.msg,
+          text: err,
           icon: 'error',
         })
       });
